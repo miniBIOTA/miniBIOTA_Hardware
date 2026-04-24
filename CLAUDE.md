@@ -17,11 +17,12 @@ ESP32 firmware for per-biome sensor nodes in the miniBIOTA closed biosphere. One
 
 ## Platform
 
-- **Board:** ESP32 (`esp32dev`)
+- **Module:** ESP-WROOM-32 (ESP32-DevKitC), all 6 nodes
+- **Carrier board:** ESP32 Breakout Board with 3.5mm screw terminal GPIO expansion (0.9"/1.0" form factor)
 - **Framework:** Arduino via PlatformIO
-- **Sensors:** SHT4x (temperature + humidity, I2C, single-node wiring per biome)
-- **Network:** Opal GL-SFT1200 micro-router (2.4 GHz biome network), upstream 5 GHz
-- **Control bus:** MQTT broker on Dell Wyse 3040 thin client
+- **Sensors:** SHT31 (temperature + humidity, I2C) — deployed on biomes 2–5; biome 1 pending hardware
+- **Network:** Opal GL-SFT1200 micro-router (2.4 GHz biome network `mB2.4`), upstream 5 GHz
+- **MQTT broker:** Mosquitto on Dell Wyse 3040 thin client at `192.168.8.228:1883`
 - **Each ESP32 owns:** local thermostat hysteresis, 12 V pump switching, sensor publishing
 
 ## How the Control System Works

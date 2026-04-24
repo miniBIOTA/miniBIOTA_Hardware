@@ -1,5 +1,11 @@
 #include <AccelStepper.h>
 #include <math.h>
+#include <WiFi.h>
+#include <ArduinoOTA.h>
+
+const char* WIFI_SSID    = "mB2.4";
+const char* WIFI_PASS    = "qYKEQe8R763HKmk";
+const char* OTA_HOSTNAME = "biome6-seagrass";
 
 // ============================================================
 // PINS
@@ -173,13 +179,47 @@ long waveOffsetCounts(float phase, float tSec) {
 }
 
 // ============================================================
+// WIFI + OTA TASK (Core 0)
+// ============================================================
+void wifiOtaTask(void* pvParameters) {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("Connected. IP: ");
+  Serial.println(WiFi.localIP());
+
+  ArduinoOTA.setHostname(OTA_HOSTNAME);
+  ArduinoOTA.onStart([]() { Serial.println("OTA start"); });
+  ArduinoOTA.onEnd([]()   { Serial.println("OTA done");  });
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf("OTA error [%u]\n", error);
+  });
+  ArduinoOTA.begin();
+  Serial.println("OTA ready.");
+
+  for (;;) {
+    ArduinoOTA.handle();
+    vTaskDelay(10 / portTICK_PERIOD_MS);
+  }
+}
+
+// ============================================================
 // SETUP
 // ============================================================
 constexpr long CAL_STEPS = 1500;
 
 void setup() {
+  Serial.begin(115200);
+  delay(500);
+
+  xTaskCreatePinnedToCore(wifiOtaTask, "wifi_ota", 8192, NULL, 1, NULL, 0);
+
   if (DEBUG_PRINTS) {
-    Serial.begin(115200);
     delay(300);
   }
 
