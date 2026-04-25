@@ -14,18 +14,20 @@ const char* TOPIC_STATUS  = "miniBIOTA/biome/1/status";
 WiFiClient wifiClient;
 PubSubClient mqtt(wifiClient);
 
+unsigned long lastMqttAttempt = 0;
+
 void connectMQTT() {
-  while (!mqtt.connected()) {
-    Serial.print("Connecting to MQTT...");
-    if (mqtt.connect(MQTT_CLIENT)) {
-      Serial.println("connected.");
-      mqtt.publish(TOPIC_STATUS, "online");
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(mqtt.state());
-      Serial.println(" retrying in 5s");
-      delay(5000);
-    }
+  if (mqtt.connected()) return;
+  if (millis() - lastMqttAttempt < 5000) return;
+  lastMqttAttempt = millis();
+  Serial.print("Connecting to MQTT...");
+  if (mqtt.connect(MQTT_CLIENT)) {
+    Serial.println("connected.");
+    mqtt.publish(TOPIC_STATUS, "online");
+  } else {
+    Serial.print("failed, rc=");
+    Serial.print(mqtt.state());
+    Serial.println(" will retry");
   }
 }
 
@@ -39,7 +41,12 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
 
+  unsigned long wifiStart = millis();
   while (WiFi.status() != WL_CONNECTED) {
+    if (millis() - wifiStart > 30000) {
+      Serial.println("\nWiFi timeout — restarting");
+      esp_restart();
+    }
     delay(500);
     Serial.print(".");
   }

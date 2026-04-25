@@ -94,17 +94,19 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   }
 }
 
+unsigned long lastMqttAttempt = 0;
+
 void connectMQTT() {
-  while (!mqtt.connected()) {
-    Serial.print("Connecting to MQTT...");
-    if (mqtt.connect(MQTT_CLIENT)) {
-      Serial.println("connected.");
-      mqtt.publish(TOPIC_STATUS, "online");
-      mqtt.subscribe(TOPIC_SETPOINT);
-    } else {
-      Serial.printf("failed rc=%d, retrying in 5s\n", mqtt.state());
-      delay(5000);
-    }
+  if (mqtt.connected()) return;
+  if (millis() - lastMqttAttempt < 5000) return;
+  lastMqttAttempt = millis();
+  Serial.print("Connecting to MQTT...");
+  if (mqtt.connect(MQTT_CLIENT)) {
+    Serial.println("connected.");
+    mqtt.publish(TOPIC_STATUS, "online");
+    mqtt.subscribe(TOPIC_SETPOINT);
+  } else {
+    Serial.printf("failed rc=%d, will retry\n", mqtt.state());
   }
 }
 
@@ -137,7 +139,12 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   Serial.print("Connecting to WiFi");
+  unsigned long wifiStart = millis();
   while (WiFi.status() != WL_CONNECTED) {
+    if (millis() - wifiStart > 30000) {
+      Serial.println("\nWiFi timeout — restarting");
+      esp_restart();
+    }
     delay(500);
     Serial.print(".");
   }
@@ -285,12 +292,17 @@ void loop() {
     // Telemetry
     if (now - lastTelemetryMs >= TELEMETRY_MS) {
       lastTelemetryMs = now;
+      char atmoT[12], atmoH[12], bioT[12], bioH[12], liqT[12];
+      if (isnan(atmoTempC))  strcpy(atmoT, "null"); else snprintf(atmoT, sizeof(atmoT), "%.2f", atmoTempC);
+      if (isnan(atmoHum))    strcpy(atmoH, "null"); else snprintf(atmoH, sizeof(atmoH), "%.1f", atmoHum);
+      if (isnan(biomeTempC)) strcpy(bioT,  "null"); else snprintf(bioT,  sizeof(bioT),  "%.2f", biomeTempC);
+      if (isnan(biomeHum))   strcpy(bioH,  "null"); else snprintf(bioH,  sizeof(bioH),  "%.1f", biomeHum);
+      if (isnan(liquidTempC) || liquidTempC < -100) strcpy(liqT, "null"); else snprintf(liqT, sizeof(liqT), "%.2f", liquidTempC);
       char payload[256];
       snprintf(payload, sizeof(payload),
-        "{\"atmo_t\":%.2f,\"atmo_h\":%.1f,\"bio_t\":%.2f,\"bio_h\":%.1f,"
-        "\"liq_t\":%.2f,\"pump_pct\":%d,\"target_t\":%.1f}",
-        atmoTempC, atmoHum, biomeTempC, biomeHum,
-        liquidTempC, pumpPercent, TARGET_TEMP_C
+        "{\"atmo_t\":%s,\"atmo_h\":%s,\"bio_t\":%s,\"bio_h\":%s,"
+        "\"liq_t\":%s,\"pump_pct\":%d,\"target_t\":%.1f}",
+        atmoT, atmoH, bioT, bioH, liqT, pumpPercent, TARGET_TEMP_C
       );
       mqtt.publish(TOPIC_TELEMETRY, payload);
     }
