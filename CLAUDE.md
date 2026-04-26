@@ -29,12 +29,45 @@ ESP32 firmware for per-biome sensor nodes in the miniBIOTA closed biosphere. One
 
 The Dell Wyse publishes target temperature setpoints via MQTT. Each ESP32 subscribes, owns local PID/hysteresis logic, and publishes telemetry back. The system stays operational if upstream internet fails — control is local.
 
+## Architecture Docs
+
+Detailed system documentation lives in `docs/` within this repo:
+
+| File | Contents |
+|---|---|
+| `docs/physical_architecture.md` | Structural support, atmosphere mounting, ports, bulkheads, modular layout |
+| `docs/climate_and_rain_system.md` | Cooling loop, condensation, cloud reservoirs, rain mechanism |
+| `docs/control_network.md` | Opal router, ESP32 nodes, MQTT, sensors, distributed control |
+| `docs/hydrological_architecture.md` | Freshwater/marine hydrology, air volume topology, isolation |
+| `docs/telemetry_pipeline_plan.md` | Wyse coordinator, Supabase tables, App Monitoring, website integration |
+| `docs/control_system_setup.md` | Setup and troubleshooting guide |
+
+These are mirrored read-only into `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\docs\` by `sync_docs.ps1` at Brain session start.
+
+## Strategy Agent Relationship
+
+This repo reports to the **Strategy Agent** at `M:\miniBIOTA\miniBIOTA_Brain`.
+
+The Strategy Agent holds the strategic brief at `6. Engineering & Hardware\engineering_brief.md`. The brief is the only hardware content the Strategy Agent reads by default — it covers system state, priorities, milestones, risks, and cross-domain dependencies. Full architecture docs stay here.
+
+### Brief Update Protocol
+At the end of any hardware session, update the brief if any of these changed:
+- System or biome state (what's healthy, offline, degraded)
+- Active priorities or what's next in the work queue
+- Milestones completed
+- Risks or blockers (especially anything affecting ecology, content, or operations)
+- Cross-domain dependencies (timing of rewires, downtime, naming changes)
+- Standardized system names
+
+Write to: `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`
+
+Do not push: firmware architecture, PlatformIO config, MQTT protocol details, wiring specifics, or setup/troubleshooting guides — those belong in `docs/` here.
+
 ## Cross-References
 
-For strategy, ecology, and system architecture context, read:
+For strategy and operational context, read:
 - `M:\miniBIOTA\miniBIOTA_Brain\_system\agent_memory.md`
-- `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_and_hardware_overview.md`
-- `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\control_network.md`
+- `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`
 
 ## Write Policy
 
