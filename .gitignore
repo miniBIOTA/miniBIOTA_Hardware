@@ -1,0 +1,27 @@
+# PlatformIO build/cache outputs
+**/.pio/
+**/.pioenvs/
+**/.piolibdeps/
+**/.sconsign*.dblite
+
+# Secrets and local environment
+.env
+.env.local
+*.env.local
+
+# Agent/editor local state
+.claude/
+.codex/
+.vscode/
+.idea/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+~$*

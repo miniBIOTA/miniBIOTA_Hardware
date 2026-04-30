@@ -1,4 +1,6 @@
-# miniBIOTA Hardware — Claude Context
+# miniBIOTA Hardware - Legacy Claude Context
+
+> Legacy note: miniBIOTA_Hardware now uses Codex as the primary operating interface. This file is retained for historical Claude context only; active Codex rules live in `AGENTS.md` and `docs/agent_protocol.md`.
 
 ## What This Repo Is
 
