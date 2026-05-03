@@ -25,3 +25,8 @@ desktop.ini
 *.tmp
 *.bak
 ~$*
+
+# Python service/test outputs
+__pycache__/
+*.py[cod]
+.test-tmp-telemetry/

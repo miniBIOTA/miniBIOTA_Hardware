@@ -1,0 +1,20 @@
+[Unit]
+Description=miniBIOTA read-only telemetry snapshot coordinator
+After=network-online.target mosquitto.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=minibiota
+Group=minibiota
+WorkingDirectory=/opt/miniBIOTA/miniBIOTA_Hardware
+EnvironmentFile=/etc/minibiota/telemetry.env
+ExecStart=/opt/miniBIOTA/telemetry-venv/bin/python /opt/miniBIOTA/miniBIOTA_Hardware/services/telemetry_coordinator.py
+Restart=always
+RestartSec=10
+
+# This service only subscribes to local MQTT and writes telemetry_snapshot.
+# It does not publish setpoints, pump commands, actuator commands, or firmware updates.
+
+[Install]
+WantedBy=multi-user.target

@@ -16,6 +16,20 @@ Wire live ESP32 sensor data from the local biome network to three surfaces:
 - **Railway website:** Public read-only monitoring surface with historical charts
 - **Supabase:** Historical time-series log for all biome telemetry
 
+## Current Implementation Slice
+
+The first Wyse-side producer implementation is intentionally read-only and limited
+to the website-compatible `telemetry_snapshot` singleton. It subscribes to local
+MQTT telemetry/status topics, maintains latest valid state for sensor biomes 2-5,
+upserts `telemetry_snapshot` row `id=1`, and can optionally write the same
+snapshot to a local JSON file for development/debug use.
+
+Deferred from this first pass:
+- `biome_telemetry` history inserts
+- `setpoint_commands` polling
+- MQTT setpoint publishing
+- pump, actuator, lighting, OTA, or other control commands
+
 ## Architecture Overview
 
 ```
@@ -140,14 +154,14 @@ Wyse polls this table every 5–10s, picks up `status='pending'` rows, publishes
 - Connect to Mosquitto at `localhost:1883` (Wyse is the broker)
 - Subscribe to `miniBIOTA/biome/+/telemetry` and `miniBIOTA/biome/+/status`
 - Maintain in-memory latest state per biome (keyed by biome_id)
-- Every 60s: insert rows into `biome_telemetry` for all biomes with fresh data
-- Every 15s: build snapshot payload → upsert `telemetry_snapshot` row id=1
-- Every 5s: query `setpoint_commands` WHERE `status='pending'` → publish each to MQTT → update `status='published'`
+- First implementation: every 15s, build snapshot payload and upsert `telemetry_snapshot` row id=1
+- Later implementation: every 60s, insert rows into `biome_telemetry` for all biomes with fresh data
+- Later implementation: every 5s, query `setpoint_commands` WHERE `status='pending'`, publish each to MQTT, then mark it published
 
 **Coordinator state for snapshot:**
 - `coordinator.state`: healthy if script is running (self-reported)
 - `upstream.state`: healthy/offline based on internet reachability check (ping 8.8.8.8)
-- `setpoint_channel.state`: healthy if any setpoint has been published in the last 5 min
+- First implementation `setpoint_channel.state`: healthy when recent telemetry includes `target_t`, otherwise standby
 - `nodes[N].state`: healthy/stale/offline based on `last_seen` vs. expected 10s publish interval
 
 **Deployment:** systemd service (`minibiota-telemetry.service`) so it starts on boot and restarts on crash.
