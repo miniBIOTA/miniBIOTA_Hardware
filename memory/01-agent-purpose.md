@@ -40,5 +40,5 @@ Josue can describe hardware problems naturally. The agent's job is to route the 
 Chat history and private model memory are never source of truth. Durable project memory belongs in:
 
 - Markdown in this repo.
-- Brain `6. Engineering & Hardware/engineering_brief.md` when strategy-level current state changes.
+- Brain `6. miniBIOTA_Hardware/hardware_brief.md` when strategy-level current state changes.
 - Supabase when the record is structured or needs to be queryable.

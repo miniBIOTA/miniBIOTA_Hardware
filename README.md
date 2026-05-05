@@ -73,7 +73,7 @@ MQTT publishing, Supabase schema changes, Wyse deployment, and command processin
 
 This domain reports to the Strategy Agent through:
 
-`M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`
+`M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
 
 Update that brief when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change.
 

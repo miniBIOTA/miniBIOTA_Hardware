@@ -44,13 +44,13 @@ Detailed system documentation lives in `docs/` within this repo:
 | `docs/telemetry_pipeline_plan.md` | Wyse coordinator, Supabase tables, App Monitoring, website integration |
 | `docs/control_system_setup.md` | Setup and troubleshooting guide |
 
-These are mirrored read-only into `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\docs\` by `sync_docs.ps1` at Brain session start.
+These are mirrored read-only into `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\docs\` by `sync_docs.ps1` at Brain session start.
 
 ## Strategy Agent Relationship
 
 This repo reports to the **Strategy Agent** at `M:\miniBIOTA\miniBIOTA_Brain`.
 
-The Strategy Agent holds the strategic brief at `6. Engineering & Hardware\engineering_brief.md`. The brief is the only hardware content the Strategy Agent reads by default — it covers system state, priorities, milestones, risks, and cross-domain dependencies. Full architecture docs stay here.
+The Strategy Agent holds the strategic brief at `6. miniBIOTA_Hardware\hardware_brief.md`. The brief is the only hardware content the Strategy Agent reads by default — it covers system state, priorities, milestones, risks, and cross-domain dependencies. Full architecture docs stay here.
 
 ### Brief Update Protocol
 At the end of any hardware session, update the brief if any of these changed:
@@ -61,7 +61,7 @@ At the end of any hardware session, update the brief if any of these changed:
 - Cross-domain dependencies (timing of rewires, downtime, naming changes)
 - Standardized system names
 
-Write to: `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`
+Write to: `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
 
 Do not push: firmware architecture, PlatformIO config, MQTT protocol details, wiring specifics, or setup/troubleshooting guides — those belong in `docs/` here.
 
@@ -69,7 +69,7 @@ Do not push: firmware architecture, PlatformIO config, MQTT protocol details, wi
 
 For strategy and operational context, read:
 - `M:\miniBIOTA\miniBIOTA_Brain\_system\agent_memory.md`
-- `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`
+- `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
 
 ## Write Policy
 

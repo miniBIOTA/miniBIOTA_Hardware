@@ -55,6 +55,6 @@ These are repo-local task playbooks, not globally installed Codex skills. Load t
 - Firmware source and `platformio.ini` remain the truth for deployed code behavior.
 - `services/` and `deploy/` remain the truth for host-side telemetry coordinator behavior.
 - Supabase remains canonical for structured telemetry, task, and domain records when those tables exist.
-- Brain `6. Engineering & Hardware/engineering_brief.md` remains the strategy-level current-state brief.
+- Brain `6. miniBIOTA_Hardware/hardware_brief.md` remains the strategy-level current-state brief.
 - `CLAUDE.md` is legacy reference only.
 - The old Hardware `docs/` mirror pattern is retired.

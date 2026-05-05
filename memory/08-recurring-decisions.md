@@ -13,7 +13,7 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 
 - Hardware uses `AGENTS.md`, `memory/`, `skills/`, and `skills/*/reference/` as the active detailed context.
 - The old Hardware `docs/` mirror pattern is retired; Brain should not mirror Hardware docs.
-- Brain gets strategy-level summaries in `6. Engineering & Hardware/engineering_brief.md`, not raw setup guides.
+- Brain gets strategy-level summaries in `6. miniBIOTA_Hardware/hardware_brief.md`, not raw setup guides.
 - Detailed setup and architecture material belongs in local skill reference files.
 - `CLAUDE.md` remains legacy context only.
 

@@ -3,7 +3,7 @@
 ## What This Repo Is
 `miniBIOTA_Hardware` is the firmware, control-network, and hardware operations repo for the miniBIOTA closed biosphere. It contains one PlatformIO/Arduino ESP32 project per biome, repo-local durable memory, repo-local task playbooks, exact hardware references, deployment helpers, and telemetry coordinator code.
 
-Codex is the primary operating interface for this repo. `CLAUDE.md` remains legacy context only; active operating rules belong in `AGENTS.md`, `memory/`, `skills/`, `skills/*/reference/`, Brain `engineering_brief.md`, or Supabase when the record is structured.
+Codex is the primary operating interface for this repo. `CLAUDE.md` remains legacy context only; active operating rules belong in `AGENTS.md`, `memory/`, `skills/`, `skills/*/reference/`, Brain `hardware_brief.md`, or Supabase when the record is structured.
 
 ## Architecture
 
@@ -46,7 +46,7 @@ If working manually:
 1. Read `AGENTS.md`.
 2. Read `memory/00-index.md`.
 3. Read `M:\miniBIOTA\miniBIOTA_Brain\_system\agent_memory.md`.
-4. Read `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`.
+4. Read `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`.
 5. Load only the memory files, local playbooks, skill reference files, firmware project, service code, or deployment reference needed for the task.
 6. Read `CLAUDE.md` only when checking legacy context that has not yet been migrated into Codex-facing docs.
 
@@ -69,7 +69,7 @@ Use this hierarchy when sources disagree:
 4. `memory/` for compressed durable knowledge.
 5. Local `skills/` playbooks for repeatable task workflows.
 6. Skill `reference/` files for supporting setup, architecture, and technical detail.
-7. Brain `6. Engineering & Hardware/engineering_brief.md` for strategy-level current state.
+7. Brain `6. miniBIOTA_Hardware/hardware_brief.md` for strategy-level current state.
 8. Supabase for structured/queryable records and telemetry schema truth.
 9. `CLAUDE.md` only as legacy context when a needed rule or detail has not yet been migrated.
 
@@ -115,7 +115,7 @@ USB upload is for first flash or recovery. OTA upload is the normal path after c
 ## Brain Relationship
 This repo reports to the Strategy Agent through:
 
-`M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`
+`M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
 
 Update that brief at session end when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change. Keep implementation details, setup guides, and exact hardware references in this repo.
 

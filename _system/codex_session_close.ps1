@@ -21,7 +21,7 @@ Write-Host ""
 
 Write-Host "[2/3] Reminder"
 Write-Host "If hardware state, priorities, milestones, risks, or cross-domain dependencies changed,"
-Write-Host "update M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md."
+Write-Host "update M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md."
 Write-Host "Hardware no longer uses a Brain docs mirror. Keep detailed context in memory, skills, and skills/*/reference."
 Write-Host ""
 

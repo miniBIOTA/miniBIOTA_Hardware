@@ -11,7 +11,7 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 
 ## Brain / Strategy Agent
 
-- Brain strategy state lives in `M:\miniBIOTA\miniBIOTA_Brain\6. Engineering & Hardware\engineering_brief.md`.
+- Brain strategy state lives in `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`.
 - Hardware updates the brief when system state, priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change.
 - Brain no longer mirrors Hardware docs. Brain routes detailed Hardware work to this repo's `AGENTS.md`, `memory/`, `skills/`, and `skills/*/reference/`.
 - Keep firmware details, setup guides, and exact architecture references in this repo, not in the Brain brief.
