@@ -6,7 +6,7 @@ The Hardware Agent treats database access as a live-system boundary. Read teleme
 
 - Database access needed: Yes, mostly read-only.
 - Default mode: Read-only telemetry and structured status checks.
-- MCP: Disabled by default. Do not add active `.mcp.json` or `.vscode/mcp.json`.
+- MCP: Brain has broad Supabase MCP read awareness. This domain may use MCP read access for relevant telemetry/hardware records, but should escalate cross-domain interpretation to Brain.
 - Preferred path: Brain helper functions in `M:\miniBIOTA\miniBIOTA_Brain\_system\minibiota_tools.py` and approved service code such as the telemetry coordinator.
 - Secrets: Local environment variables or ignored local config only.
 
