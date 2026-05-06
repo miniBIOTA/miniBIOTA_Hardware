@@ -29,7 +29,7 @@ The agent is not a substitute for current implemented source. When code behavior
 - `skills/*/reference/` holds exact supporting references for setup and architecture.
 - Existing biome folders hold PlatformIO projects and deployed firmware source.
 - `services/` and `deploy/` hold the host-side telemetry coordinator implementation.
-- `CLAUDE.md` is legacy context only and should be read only when a needed detail has not yet been migrated.
+- Legacy Claude context is archived at `archive/legacy/CLAUDE.md` and is historical only, not startup context.
 
 ## Relationship With Josue
 

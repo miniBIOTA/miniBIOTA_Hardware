@@ -3,7 +3,7 @@
 ## What This Repo Is
 `miniBIOTA_Hardware` is the firmware, control-network, and hardware operations repo for the miniBIOTA closed biosphere. It contains one PlatformIO/Arduino ESP32 project per biome, repo-local durable memory, repo-local task playbooks, exact hardware references, deployment helpers, and telemetry coordinator code.
 
-Codex is the primary operating interface for this repo. `CLAUDE.md` remains legacy context only; active operating rules belong in `AGENTS.md`, `memory/`, `skills/`, `skills/*/reference/`, Brain `hardware_brief.md`, or Supabase when the record is structured.
+Codex is the primary operating interface for this repo. Legacy Claude context has been archived at `archive/legacy/CLAUDE.md` for historical investigation only. Active operating rules belong in `AGENTS.md`, `memory/`, `skills/`, `skills/*/reference/`, Brain `hardware_brief.md`, or Supabase when the record is structured.
 
 ## Architecture
 
@@ -48,7 +48,6 @@ If working manually:
 3. Read `M:\miniBIOTA\miniBIOTA_Brain\_system\agent_memory.md`.
 4. Read `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`.
 5. Load only the memory files, local playbooks, skill reference files, firmware project, service code, or deployment reference needed for the task.
-6. Read `CLAUDE.md` only when checking legacy context that has not yet been migrated into Codex-facing docs.
 
 ## Routing
 
@@ -58,7 +57,7 @@ If working manually:
 - For deployed firmware behavior, read the affected biome project and `platformio.ini`.
 - For telemetry coordinator behavior, read `services/` and `deploy/`.
 - For current structured records, use Supabase through the Brain tool layer only when the task requires live/queryable state.
-- For legacy details not yet migrated, use `CLAUDE.md` sparingly and treat it as lower-priority legacy context.
+- Archived legacy Claude context is historical only and does not override Codex-facing docs.
 
 ## Source Of Truth
 Use this hierarchy when sources disagree:
@@ -71,7 +70,7 @@ Use this hierarchy when sources disagree:
 6. Skill `reference/` files for supporting setup, architecture, and technical detail.
 7. Brain `6. miniBIOTA_Hardware/hardware_brief.md` for strategy-level current state.
 8. Supabase for structured/queryable records and telemetry schema truth.
-9. `CLAUDE.md` only as legacy context when a needed rule or detail has not yet been migrated.
+9. `archive/legacy/CLAUDE.md` only for historical investigation; it is not active source of truth.
 
 Chat history and private model memory are never source of truth. Durable project memory belongs in Markdown in this repo, in the Brain engineering brief, or in Supabase when it is structured data.
 

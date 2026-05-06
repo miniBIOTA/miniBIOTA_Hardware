@@ -29,6 +29,7 @@ For every Hardware session:
 | `memory/02-system-architecture.md` | Orienting around physical, hydrological, climate, rain, and enclosure architecture |
 | `memory/03-control-network.md` | Working with Opal, Wyse, Mosquitto, ESP32 nodes, MQTT, and sensor topology |
 | `memory/04-firmware-and-biome-map.md` | Choosing the correct PlatformIO project, biome ID, firmware status, and build/upload path |
+| `memory/05-database-access.md` | Hardware database access boundaries, owned/read/write tables, and Brain reporting expectations |
 | `memory/05-telemetry-and-data-flow.md` | Working with App Monitoring, Wyse coordinator, Supabase telemetry, website snapshots, or MQTT payloads |
 | `memory/06-hardware-safety-rules.md` | Checking approval gates and live-biosphere safety rules |
 | `memory/07-cross-agent-relationships.md` | Deciding what belongs in Hardware, Brain, App, Web, Content, Research, or Supabase |
@@ -56,5 +57,5 @@ These are repo-local task playbooks, not globally installed Codex skills. Load t
 - `services/` and `deploy/` remain the truth for host-side telemetry coordinator behavior.
 - Supabase remains canonical for structured telemetry, task, and domain records when those tables exist.
 - Brain `6. miniBIOTA_Hardware/hardware_brief.md` remains the strategy-level current-state brief.
-- `CLAUDE.md` is legacy reference only.
+- `archive/legacy/CLAUDE.md` is historical reference only, not active startup context.
 - The old Hardware `docs/` mirror pattern is retired.

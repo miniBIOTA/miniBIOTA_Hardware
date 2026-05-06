@@ -15,7 +15,7 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 - The old Hardware `docs/` mirror pattern is retired; Brain should not mirror Hardware docs.
 - Brain gets strategy-level summaries in `6. miniBIOTA_Hardware/hardware_brief.md`, not raw setup guides.
 - Detailed setup and architecture material belongs in local skill reference files.
-- `CLAUDE.md` remains legacy context only.
+- Legacy Claude context is archived at `archive/legacy/CLAUDE.md` and is historical only.
 
 ## Control Model
 

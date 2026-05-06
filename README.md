@@ -18,7 +18,7 @@ Then read the files listed by the helper, especially `AGENTS.md`, `memory/00-ind
 | `memory/` | Compressed durable Hardware Agent memory |
 | `skills/` | Repo-local task playbooks |
 | `skills/*/reference/` | Exact setup, architecture, telemetry, and firmware references |
-| `CLAUDE.md` | Legacy Claude context, retained for reference only |
+| `archive/legacy/CLAUDE.md` | Historical Claude context, not active operating guidance |
 | `1. Freshwater Lake Biome/` | PlatformIO project for biome 1 |
 | `2. Lakeshore Biome/` | PlatformIO project for biome 2 |
 | `3. Lowland Meadow Biome/` | PlatformIO project for biome 3 |
