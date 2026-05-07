@@ -47,6 +47,7 @@ These are repo-local task playbooks, not globally installed Codex skills. Load t
 | `skills/telemetry-coordinator/SKILL.md` | Working on the Wyse telemetry coordinator, website snapshot contract, Supabase telemetry plan, or coordinator tests |
 | `skills/hardware-architecture-reference/SKILL.md` | Answering physical, hydrological, climate, rain, enclosure, or system-boundary questions |
 | `skills/update-hardware-memory/SKILL.md` | Promoting durable Hardware decisions or repeated instructions into memory safely |
+| `skills/hardware-session-closeout/SKILL.md` | Closing Hardware sessions with verification, Brain brief checks, and live-system non-change confirmation |
 
 ## Source Boundaries
 

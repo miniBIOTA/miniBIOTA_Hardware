@@ -15,8 +15,8 @@ The Hardware Agent treats database access as a live-system boundary. Read teleme
 | Category | Tables |
 |---|---|
 | Owned | `telemetry_snapshot`; future `biome_telemetry` and `setpoint_commands` only when approved |
-| Read-only | `biomes`, `species`, `biosphere_profile`, App monitoring records, public telemetry endpoints, `tasks`, `domain_history` |
-| Controlled write | `telemetry_snapshot` through approved service/helper paths; hardware `tasks` and `domain_history` through helpers |
+| Read-only | `biomes`, `species`, `biosphere_profile`, App monitoring records, public telemetry endpoints and `tasks` |
+| Controlled write | `telemetry_snapshot` through approved service/helper paths; hardware `tasks` through helpers and durable context through repo/vault updates |
 | Admin/migration | Telemetry schema, live-control tables, and migrations only with explicit user approval |
 
 ## Approval Boundary

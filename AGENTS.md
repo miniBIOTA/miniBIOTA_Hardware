@@ -53,6 +53,7 @@ If working manually:
 
 - For durable identity, system architecture, control-network state, firmware map, telemetry flow, safety rules, cross-agent relationships, and recurring decisions, use `memory/`.
 - For repeatable actions, use repo-local playbooks in `skills/`.
+- For session closeout, use `skills/hardware-session-closeout/SKILL.md`.
 - For exact setup procedures, topic maps, physical architecture, telemetry plans, or deployment detail, use the relevant playbook's `reference/` folder.
 - For deployed firmware behavior, read the affected biome project and `platformio.ini`.
 - For telemetry coordinator behavior, read `services/` and `deploy/`.
