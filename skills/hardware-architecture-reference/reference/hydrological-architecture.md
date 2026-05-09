@@ -9,7 +9,7 @@ tags: [hydrology, freshwater, marine, air-topology, estuary]
 
 The miniBIOTA hydrological architecture covers water routing, air volume topology, and freshwater-marine isolation.
 
-System-level hardware details now live under `systems/`; use this file as compact supporting hydrology context.
+System-level hardware details now live under `0. Hardware Systems/`; use this file as compact supporting hydrology context.
 
 ## Air Volume Topology
 

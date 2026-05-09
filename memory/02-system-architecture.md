@@ -71,13 +71,13 @@ Treat miniBIOTA as one coupled air network with routed processing:
 
 ## Exact References
 
-Use `systems/` for detailed system-level architecture:
+Use `0. Hardware Systems/` for detailed system-level architecture:
 
-- `systems/01-climate-system/`
-- `systems/02-rain-system/`
-- `systems/03-lighting-system/`
-- `systems/04-wave-and-tide-system/`
-- `systems/05-control-system/`
-- `systems/06-enclosure/`
+- `0. Hardware Systems/1. Climate System/`
+- `0. Hardware Systems/2. Rain System/`
+- `0. Hardware Systems/3. Lighting System/`
+- `0. Hardware Systems/4. Wave & Tide System/`
+- `0. Hardware Systems/5. Control System/`
+- `0. Hardware Systems/6. Enclosure/`
 
-Use `skills/hardware-architecture-reference/reference/` only for older architecture reference context that has not yet been promoted into `systems/`.
+Use `skills/hardware-architecture-reference/reference/` only for older architecture reference context that has not yet been promoted into `0. Hardware Systems/`.

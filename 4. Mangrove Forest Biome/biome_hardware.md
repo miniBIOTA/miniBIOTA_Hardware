@@ -131,9 +131,9 @@ Changing pump switching, thermostat logic, setpoint handling, telemetry serializ
 
 ## System References
 
-- Control System sensor node architecture: `../systems/05-control-system/sensor-nodes.md`
-- Climate System pump/control architecture: `../systems/01-climate-system/pumps-and-control.md`
-- Atmospheric heat exchanger data sheet: `../systems/01-climate-system/atmospheric-heat-exchanger.md`
+- Control System sensor node architecture: `../0. Hardware Systems/5. Control System/sensor-nodes.md`
+- Climate System pump/control architecture: `../0. Hardware Systems/1. Climate System/pumps-and-control.md`
+- Atmospheric heat exchanger data sheet: `../0. Hardware Systems/1. Climate System/atmospheric-heat-exchanger.md`
 
 ---
 

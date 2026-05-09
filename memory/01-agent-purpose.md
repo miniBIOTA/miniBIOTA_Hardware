@@ -25,7 +25,7 @@ The agent is not a substitute for current implemented source. When code behavior
 
 - `AGENTS.md` is the repo entry point and holds hard rules.
 - `memory/` holds compressed durable knowledge.
-- `systems/` holds the six canonical system data sheets and cross-biome hardware architecture.
+- `0. Hardware Systems/` holds the six canonical system data sheets and cross-biome hardware architecture.
 - `skills/` holds repo-local task playbooks.
 - `skills/*/reference/` holds exact supporting references for setup, telemetry, deployment, protocol, and legacy architecture context.
 - Existing biome folders hold PlatformIO projects, deployed firmware source, and per-biome installed hardware docs.

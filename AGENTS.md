@@ -3,7 +3,7 @@
 ## What This Repo Is
 `miniBIOTA_Hardware` is the firmware, control-network, and hardware operations repo for the miniBIOTA closed biosphere. It contains one PlatformIO/Arduino ESP32 project per biome, repo-local durable memory, repo-local task playbooks, exact hardware references, deployment helpers, and telemetry coordinator code.
 
-Codex is the primary operating interface for this repo. Legacy Claude context has been archived at `archive/legacy/CLAUDE.md` for historical investigation only. Active operating rules belong in `AGENTS.md`, `memory/`, `systems/`, `skills/`, `skills/*/reference/`, Brain `hardware_brief.md`, or Supabase when the record is structured.
+Codex is the primary operating interface for this repo. Legacy Claude context has been archived at `archive/legacy/CLAUDE.md` for historical investigation only. Active operating rules belong in `AGENTS.md`, `memory/`, `0. Hardware Systems/`, `skills/`, `skills/*/reference/`, Brain `hardware_brief.md`, or Supabase when the record is structured.
 
 ## Architecture
 
@@ -11,7 +11,7 @@ Codex is the primary operating interface for this repo. Legacy Claude context ha
 |---|---|
 | `AGENTS.md` | Hard operating rules, safety rules, and routing |
 | `memory/` | Compressed durable Hardware Agent knowledge |
-| `systems/` | Six canonical system data sheets and cross-biome hardware architecture |
+| `0. Hardware Systems/` | Six canonical system data sheets and cross-biome hardware architecture |
 | `skills/` | Repo-local task playbooks, not globally installed Codex skills |
 | `skills/*/reference/` | Exact supporting references for playbooks that need setup, telemetry, deployment, protocol, or legacy architecture detail |
 | `1. Freshwater Lake Biome/` through `6. Seagrass Meadow Biome/` | Existing PlatformIO firmware projects |
@@ -21,7 +21,7 @@ Codex is the primary operating interface for this repo. Legacy Claude context ha
 | Supabase | Structured telemetry, task, and domain records when implemented |
 | Brain engineering brief | Strategy-level current state and cross-domain coordination |
 
-There is no active `docs/` mirror pattern for Hardware. Detailed source material now lives in biome folders, `systems/`, memory, local playbooks, and skill reference files.
+There is no active `docs/` mirror pattern for Hardware. Detailed source material now lives in biome folders, `0. Hardware Systems/`, memory, local playbooks, and skill reference files.
 
 ## Tech Stack
 - PlatformIO projects using the Arduino framework.
@@ -48,12 +48,12 @@ If working manually:
 2. Read `memory/00-index.md`.
 3. Read `M:\miniBIOTA\miniBIOTA_Brain\_system\agent_memory.md`.
 4. Read `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`.
-5. Load only the memory files, `systems/` data sheets, local playbooks, skill reference files, firmware project, service code, or deployment reference needed for the task.
+5. Load only the memory files, `0. Hardware Systems/` data sheets, local playbooks, skill reference files, firmware project, service code, or deployment reference needed for the task.
 
 ## Routing
 
 - For durable identity, system architecture summaries, control-network state, firmware map, telemetry flow, safety rules, cross-agent relationships, and recurring decisions, use `memory/`.
-- For detailed cross-biome system architecture, use `systems/`.
+- For detailed cross-biome system architecture, use `0. Hardware Systems/`.
 - For repeatable actions, use repo-local playbooks in `skills/`.
 - For session closeout, use `skills/hardware-session-closeout/SKILL.md`.
 - For exact setup procedures, topic maps, telemetry plans, deployment detail, or older supporting architecture context, use the relevant playbook's `reference/` folder.
@@ -69,7 +69,7 @@ Use this hierarchy when sources disagree:
 2. Local `AGENTS.md` for hard Hardware Agent operating rules.
 3. Firmware source, `platformio.ini`, service code, and deployment files for implemented behavior.
 4. Biome `biome_hardware.md` files for per-biome installed hardware.
-5. `systems/` for canonical cross-biome system data sheets and hardware architecture.
+5. `0. Hardware Systems/` for canonical cross-biome system data sheets and hardware architecture.
 6. `memory/` for compressed durable knowledge.
 7. Local `skills/` playbooks for repeatable task workflows.
 8. Skill `reference/` files for supporting setup procedures, deployment detail, and legacy architecture context.
@@ -121,9 +121,9 @@ This repo reports to the Strategy Agent through:
 
 `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
 
-Update that brief at session end when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change. Keep implementation details, setup guides, and exact hardware references in this repo, especially in biome folders and `systems/`.
+Update that brief at session end when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change. Keep implementation details, setup guides, and exact hardware references in this repo, especially in biome folders and `0. Hardware Systems/`.
 
-Brain no longer mirrors Hardware docs. Brain should route deeper Hardware work to this repo's `AGENTS.md`, biome folders, `systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
+Brain no longer mirrors Hardware docs. Brain should route deeper Hardware work to this repo's `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
 
 ## Write Policy
 Respect `MINIBIOTA_WRITE_MODE` from Brain when available:

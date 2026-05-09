@@ -25,7 +25,7 @@ Use this playbook when Josue says things like:
 
 ## Required References
 
-- `systems/05-control-system/`
+- `0. Hardware Systems/5. Control System/`
 - `skills/control-network-setup/reference/control-system-setup.md`
 - `skills/control-network-setup/reference/control-network.md`
 

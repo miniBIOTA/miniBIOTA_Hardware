@@ -26,7 +26,7 @@ Use this playbook when Josue says things like:
 
 ## Required References
 
-- `systems/05-control-system/`
+- `0. Hardware Systems/5. Control System/`
 - `skills/telemetry-coordinator/reference/telemetry-pipeline-plan.md`
 - `services/telemetry_coordinator.py`
 - `services/tests/test_telemetry_coordinator.py`

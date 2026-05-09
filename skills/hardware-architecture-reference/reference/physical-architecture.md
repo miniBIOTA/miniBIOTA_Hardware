@@ -7,7 +7,7 @@ tags: [architecture, tanks, cabinets, ports, bulkheads, modular]
 ---
 # Physical Architecture Reference
 
-Active Enclosure details now live in `systems/06-enclosure/`. Keep this file as compact supporting context for the architecture playbook.
+Active Enclosure details now live in `0. Hardware Systems/6. Enclosure/`. Keep this file as compact supporting context for the architecture playbook.
 
 ## Core Definition
 

@@ -26,19 +26,19 @@ Use this playbook when Josue says things like:
 
 ## Required References
 
-- Start with the relevant `systems/` folder:
-  - `systems/01-climate-system/`
-  - `systems/02-rain-system/`
-  - `systems/03-lighting-system/`
-  - `systems/04-wave-and-tide-system/`
-  - `systems/05-control-system/`
-  - `systems/06-enclosure/`
-- Use `skills/hardware-architecture-reference/reference/physical-architecture.md`, `hydrological-architecture.md`, and `climate-and-rain-system.md` only for older supporting context that has not yet been promoted into `systems/`.
+- Start with the relevant `0. Hardware Systems/` folder:
+  - `0. Hardware Systems/1. Climate System/`
+  - `0. Hardware Systems/2. Rain System/`
+  - `0. Hardware Systems/3. Lighting System/`
+  - `0. Hardware Systems/4. Wave & Tide System/`
+  - `0. Hardware Systems/5. Control System/`
+  - `0. Hardware Systems/6. Enclosure/`
+- Use `skills/hardware-architecture-reference/reference/physical-architecture.md`, `hydrological-architecture.md`, and `climate-and-rain-system.md` only for older supporting context that has not yet been promoted into `0. Hardware Systems/`.
 
 ## Workflow
 
 1. Identify whether the question is about enclosure, hydrology, air topology, climate, rain, closure, or naming.
-2. Read the relevant memory and exact `systems/` file before answering detailed questions.
+2. Read the relevant memory and exact `0. Hardware Systems/` file before answering detailed questions.
 3. Keep current state, target state, and planned future features separate.
 4. Use current canonical biome names: Freshwater Lake, Lakeshore, Lowland Meadow, Mangrove Forest, Marine Shore, Seagrass Meadow.
 5. When architecture changes affect Brain strategy state, update the Brain engineering brief at closeout.

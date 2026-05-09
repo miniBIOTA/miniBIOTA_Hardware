@@ -16,7 +16,7 @@ Then read the files listed by the helper, especially `AGENTS.md`, `memory/00-ind
 |---|---|
 | `AGENTS.md` | Codex entry point and repo operating rules |
 | `memory/` | Compressed durable Hardware Agent memory |
-| `systems/` | Six canonical hardware systems and cross-biome architecture/data sheets |
+| `0. Hardware Systems/` | Six canonical hardware systems and cross-biome architecture/data sheets |
 | `skills/` | Repo-local task playbooks |
 | `skills/*/reference/` | Exact setup, telemetry, firmware, deployment, and legacy architecture references |
 | `archive/legacy/CLAUDE.md` | Historical Claude context, not active operating guidance |
@@ -30,22 +30,22 @@ Then read the files listed by the helper, especially `AGENTS.md`, `memory/00-ind
 | `deploy/` | Deployment examples |
 | `_system/` | Codex session helpers |
 
-The old `docs/` mirror pattern is retired. Hardware detail now routes through biome folders, `systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
+The old `docs/` mirror pattern is retired. Hardware detail now routes through biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
 
 ## System Documentation
 
-The canonical system-level architecture lives in `systems/`:
+The canonical system-level architecture lives in `0. Hardware Systems/`:
 
 | Folder | System |
 |---|---|
-| `systems/01-climate-system/` | Climate System |
-| `systems/02-rain-system/` | Rain System |
-| `systems/03-lighting-system/` | Lighting System |
-| `systems/04-wave-and-tide-system/` | Wave & Tide System |
-| `systems/05-control-system/` | Control System |
-| `systems/06-enclosure/` | Enclosure |
+| `0. Hardware Systems/1. Climate System/` | Climate System |
+| `0. Hardware Systems/2. Rain System/` | Rain System |
+| `0. Hardware Systems/3. Lighting System/` | Lighting System |
+| `0. Hardware Systems/4. Wave & Tide System/` | Wave & Tide System |
+| `0. Hardware Systems/5. Control System/` | Control System |
+| `0. Hardware Systems/6. Enclosure/` | Enclosure |
 
-Biome folders remain top-level PlatformIO implementation projects. Use biome folders for exact installed hardware and firmware; use `systems/` for cross-biome architecture and shared system data sheets.
+Biome folders remain top-level PlatformIO implementation projects. Use biome folders for exact installed hardware and firmware; use `0. Hardware Systems/` for cross-biome architecture and shared system data sheets.
 
 ## Firmware Commands
 
@@ -93,7 +93,7 @@ This domain reports to the Strategy Agent through:
 
 Update that brief when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change.
 
-Brain no longer mirrors Hardware docs. Use this repo's `AGENTS.md`, biome folders, `systems/`, `memory/`, `skills/`, and `skills/*/reference/` for detailed Hardware context.
+Brain no longer mirrors Hardware docs. Use this repo's `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/` for detailed Hardware context.
 
 ## GitHub
 
