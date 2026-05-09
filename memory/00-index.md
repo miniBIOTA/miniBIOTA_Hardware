@@ -20,7 +20,7 @@ For every Hardware session:
 5. Read `0. Hardware Systems/` files when the task concerns Climate, Rain, Lighting, Wave & Tide, Control System, or Enclosure architecture.
 6. Read skill reference files only when the task requires setup procedures, exact topic maps, deployment commands, or telemetry contracts.
 7. Read affected firmware/service files before changing implemented behavior.
-8. Use Supabase through the Brain tool layer when current structured records matter.
+8. Use Supabase/App Planner when current structured telemetry, project, or task records matter.
 
 ## Memory Files
 
@@ -70,7 +70,7 @@ These are repo-local task playbooks, not globally installed Codex skills. Load t
 - `skills/*/reference/` holds exact setup, telemetry, firmware, deployment, and legacy architecture references for playbooks that need them.
 - Firmware source and `platformio.ini` remain the truth for deployed code behavior.
 - `services/` and `deploy/` remain the truth for host-side telemetry coordinator behavior.
-- Supabase remains canonical for structured telemetry, task, and domain records when those tables exist.
+- Supabase remains canonical for structured telemetry, task, project, and domain records when those tables exist.
 - Brain `6. miniBIOTA_Hardware/hardware_brief.md` remains the strategy-level current-state brief.
 - `archive/legacy/CLAUDE.md` is historical reference only, not active startup context.
 - The old Hardware `docs/` mirror pattern is retired.

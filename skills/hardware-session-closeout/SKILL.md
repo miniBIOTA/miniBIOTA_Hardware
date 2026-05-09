@@ -32,10 +32,12 @@ Use this playbook when the user says:
 3. Decide whether Brain `hardware_brief.md` needs an update for strategy-level system state, priorities, milestones, risks, blockers, canonical names, or cross-domain dependencies.
 4. Decide whether firmware behavior, telemetry coordinator behavior, MQTT topics, OTA behavior, Supabase telemetry/schema, router/Wyse configuration, or live-control paths changed.
 5. Run the smallest meaningful verification for the touched surface when practical.
-6. Run `git diff --name-only`.
-7. Run `git status --short --branch`.
-8. Confirm no firmware upload, MQTT command, live control, schema change, deployment change, router/Wyse change, or physical-world action occurred unless explicitly approved.
-9. Report unresolved questions and any deferred Brain brief, task, deployment, or domain follow-up.
+6. Check whether completed work maps to an open App Planner Hardware task.
+7. If a task can be cleared, ask before marking it done unless the user explicitly approved the live Planner update.
+8. Run `git diff --name-only`.
+9. Run `git status --short --branch`.
+10. Confirm no firmware upload, MQTT command, live control, schema change, deployment change, router/Wyse change, Planner write, or physical-world action occurred unless explicitly approved.
+11. Report unresolved questions and any deferred Brain brief, task, deployment, or domain follow-up.
 
 ## Expected Output
 
@@ -58,6 +60,7 @@ Unresolved questions:
 - Do not upload firmware, publish MQTT commands, change router/Wyse configuration, change telemetry schema, or touch live controls from closeout.
 - Do not update Brain hardware brief unless strategy-level state changed and the user has not deferred it.
 - Do not write Supabase telemetry/control records without explicit approval and readback.
+- Do not create, edit, complete, archive, or delete App Planner project/task records without explicit approval and readback.
 - Do not commit, push, deploy, or restart services unless explicitly scoped.
 
 ## Do Not Do

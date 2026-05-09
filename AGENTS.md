@@ -18,7 +18,7 @@ Codex is the primary operating interface for this repo. Legacy Claude context ha
 | `services/` | Host-side telemetry coordinator code and tests |
 | `deploy/` | Deployment examples for Wyse/systemd services |
 | `_system/` | PowerShell session helpers |
-| Supabase | Structured telemetry, task, and domain records when implemented |
+| Supabase / App Planner | Structured telemetry plus live Hardware project/task records |
 | Brain engineering brief | Strategy-level current state and cross-domain coordination |
 
 There is no active `docs/` mirror pattern for Hardware. Detailed source material now lives in biome folders, `0. Hardware Systems/`, memory, local playbooks, and skill reference files.
@@ -59,7 +59,7 @@ If working manually:
 - For exact setup procedures, topic maps, telemetry plans, deployment detail, or older supporting architecture context, use the relevant playbook's `reference/` folder.
 - For deployed firmware behavior, read the affected biome project and `platformio.ini`.
 - For telemetry coordinator behavior, read `services/` and `deploy/`.
-- For current structured records, use Supabase through the Brain tool layer only when the task requires live/queryable state.
+- For current structured records, use Supabase/App Planner when the task requires live/queryable state.
 - Archived legacy Claude context is historical only and does not override Codex-facing docs.
 
 ## Source Of Truth
@@ -95,6 +95,13 @@ Chat history and private model memory are never source of truth. Durable project
 - Prefer documentation-only changes unless the user explicitly scopes firmware, deployment, schema, or live control-system work.
 - Do not create dummy database, telemetry, or MQTT writes to inspect behavior.
 - Read-only MQTT subscriptions, service dry-runs, and local tests are allowed when they do not publish commands or alter live state.
+
+## Planner / Project Management
+- Hardware work is tracked in the App Planner through Supabase `work_projects` and `tasks`.
+- Current Hardware projects live under the Engineering domain with `domain_label = Engineering & Hardware` and `owner_agent = Hardware Agent`.
+- At the start of planning-heavy Hardware sessions, read current Planner projects/tasks when choosing next work or checking blockers.
+- At closeout, if completed work maps to a Planner task, ask whether to mark that task done unless the user explicitly asked for that live task update.
+- Creating/editing Planner projects or tasks, changing status, marking done, archiving, or adding subtasks are live Supabase writes and require explicit user approval.
 
 ## Current Hardware Watchouts
 - All 6 biome nodes have live firmware; biomes 1-5 were USB-flashed on 2026-04-25 and OTA works going forward.

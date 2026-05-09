@@ -21,6 +21,10 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 - App Monitoring consumes live MQTT data when on `mB2.4`.
 - App setpoint control is a live-control surface and must coordinate with Hardware safety rules.
 - App fallback telemetry from Supabase should match the coordinator snapshot contract.
+- App Planner is the live project-management surface for Hardware work.
+- Hardware projects are stored as Supabase `work_projects` under the Engineering domain with `domain_label = Engineering & Hardware` on linked tasks.
+- Hardware sessions should read Planner tasks when choosing what to work on and should offer to mark tasks done when completed work clearly maps to an open task.
+- Planner project/task creation, status changes, completion, archive, and subtask writes are live operational records and need explicit approval.
 
 ## Web Agent
 
@@ -42,5 +46,6 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 ## Supabase
 
 - Supabase is canonical for structured telemetry records once tables are implemented.
+- Supabase is canonical for Hardware Planner project/task records through the App Planner tables.
 - Schema changes and command queue writes require explicit approval.
 - Do not use Supabase as a scratchpad for testing return values.

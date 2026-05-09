@@ -15,13 +15,22 @@ The Hardware Agent treats database access as a live-system boundary. Read teleme
 | Category | Tables |
 |---|---|
 | Owned | `telemetry_snapshot`; future `biome_telemetry` and `setpoint_commands` only when approved |
-| Read-only | `biomes`, `species`, `biosphere_profile`, App monitoring records, public telemetry endpoints and `tasks` |
-| Controlled write | `telemetry_snapshot` through approved service/helper paths; hardware `tasks` through helpers and durable context through repo/vault updates |
+| Read-only | `biomes`, `species`, `biosphere_profile`, App monitoring records, public telemetry endpoints, `work_projects`, and `tasks` |
+| Controlled write | `telemetry_snapshot` through approved service/helper paths; Hardware Planner `work_projects` and `tasks` only after explicit user approval |
 | Admin/migration | Telemetry schema, live-control tables, and migrations only with explicit user approval |
 
 ## Approval Boundary
 
-Explicit user approval is required for raw SQL, migrations, destructive writes, schema changes, service-role actions, telemetry schema edits, live-control commands, setpoint queues, firmware changes that affect controls, MQTT topic changes, or deployment changes.
+Explicit user approval is required for raw SQL, migrations, destructive writes, schema changes, service-role actions, telemetry schema edits, live-control commands, setpoint queues, firmware changes that affect controls, MQTT topic changes, deployment changes, or Planner project/task writes.
+
+## Planner Task Records
+
+Hardware work is managed in the App Planner through Supabase `work_projects` and `tasks`.
+
+- Read Planner projects/tasks when current work priorities, blockers, or completion status matter.
+- Hardware Planner tasks currently use the Engineering domain with `domain_label = Engineering & Hardware`.
+- Creating projects/tasks, linking tasks to projects, adding subtasks, changing status, marking done, or archiving are live operational writes.
+- At closeout, offer to update Planner task status when completed work maps clearly to an open task.
 
 ## Brain Reporting
 
