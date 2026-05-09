@@ -2,7 +2,7 @@
 id: hardware_system_architecture
 title: System Architecture
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [memory, architecture, enclosure, climate, rain, hydrology]
 ---
 # System Architecture
@@ -71,4 +71,13 @@ Treat miniBIOTA as one coupled air network with routed processing:
 
 ## Exact References
 
-Use `skills/hardware-architecture-reference/reference/` for detailed physical, hydrological, climate, and rain architecture.
+Use `systems/` for detailed system-level architecture:
+
+- `systems/01-climate-system/`
+- `systems/02-rain-system/`
+- `systems/03-lighting-system/`
+- `systems/04-wave-and-tide-system/`
+- `systems/05-control-system/`
+- `systems/06-enclosure/`
+
+Use `skills/hardware-architecture-reference/reference/` only for older architecture reference context that has not yet been promoted into `systems/`.

@@ -2,7 +2,7 @@
 id: hardware_cross_agent_relationships
 title: Cross-Agent Relationships
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [memory, brain, app, web, content, research, supabase]
 ---
 # Cross-Agent Relationships
@@ -13,8 +13,8 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 
 - Brain strategy state lives in `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`.
 - Hardware updates the brief when system state, priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change.
-- Brain no longer mirrors Hardware docs. Brain routes detailed Hardware work to this repo's `AGENTS.md`, `memory/`, `skills/`, and `skills/*/reference/`.
-- Keep firmware details, setup guides, and exact architecture references in this repo, not in the Brain brief.
+- Brain no longer mirrors Hardware docs. Brain routes detailed Hardware work to this repo's `AGENTS.md`, biome folders, `systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
+- Keep firmware details, setup guides, and exact architecture references in this repo, especially biome folders and `systems/`, not in the Brain brief.
 
 ## App Agent
 
@@ -32,6 +32,7 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 
 - Hardware downtime, rewire sessions, visible failures, rain events, wave/tide behavior, and sensor changes can affect filming and story planning.
 - Coordinate before scheduling content that depends on biomes 2-5 during the planned sensor/controller rewire.
+- The six public system names in `systems/00-index.md` must stay aligned with website/App/Brain system records.
 
 ## Research / Ecosystem
 

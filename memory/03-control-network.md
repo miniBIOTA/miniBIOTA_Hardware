@@ -2,12 +2,14 @@
 id: hardware_control_network
 title: Control Network
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [memory, control, mqtt, opal, wyse, esp32, sensors]
 ---
 # Control Network
 
 The miniBIOTA control network is a local-first distributed system. ESP32 nodes own local behavior; the Wyse and App observe and coordinate through MQTT.
+
+Active Control System architecture now lives in `systems/05-control-system/`.
 
 ## Network
 
@@ -54,4 +56,4 @@ Deployed firmware currently uses SHT31 sensors on biomes 2-5. Some older archite
 
 ## Exact References
 
-Use `skills/control-network-setup/reference/` for full setup, DHCP leases, Mosquitto configuration, topic tables, payload examples, and deployment steps.
+Use `systems/05-control-system/` for Control System architecture. Use `skills/control-network-setup/reference/` for setup procedures, DHCP leases, Mosquitto configuration, topic tables, payload examples, and deployment steps.

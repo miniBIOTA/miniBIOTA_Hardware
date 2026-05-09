@@ -2,12 +2,14 @@
 id: hydrological_architecture_reference
 title: Hydrological Architecture Reference
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [hydrology, freshwater, marine, air-topology, estuary]
 ---
 # Hydrological Architecture Reference
 
 The miniBIOTA hydrological architecture covers water routing, air volume topology, and freshwater-marine isolation.
+
+System-level hardware details now live under `systems/`; use this file as compact supporting hydrology context.
 
 ## Air Volume Topology
 

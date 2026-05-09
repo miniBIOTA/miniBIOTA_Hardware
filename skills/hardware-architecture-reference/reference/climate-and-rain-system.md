@@ -2,12 +2,19 @@
 id: climate_and_rain_system_reference
 title: Climate And Rain System Reference
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [climate, cooling, rain, condensation, cloud-reservoirs, chiller]
 ---
 # Climate And Rain System Reference
 
 The Climate System and Rain System drive the miniBIOTA atmospheric water cycle.
+
+Active detailed system docs now live in:
+
+- `systems/01-climate-system/`
+- `systems/02-rain-system/`
+
+Keep this file as compact supporting context for the architecture playbook.
 
 ## Climate System
 
@@ -26,6 +33,7 @@ The Climate System and Rain System drive the miniBIOTA atmospheric water cycle.
 - Each atmosphere or cooling branch has its own 12 V pump.
 - Each pump taps into the central loop.
 - Coolant circulates through a heat exchanger mounted on rear exterior glass.
+- Current atmospheric heat exchanger details are specified in `systems/01-climate-system/atmospheric-heat-exchanger.md`.
 
 ### Control
 

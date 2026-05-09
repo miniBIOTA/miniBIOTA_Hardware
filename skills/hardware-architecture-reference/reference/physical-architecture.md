@@ -2,10 +2,12 @@
 id: physical_architecture_reference
 title: Physical Architecture Reference
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [architecture, tanks, cabinets, ports, bulkheads, modular]
 ---
 # Physical Architecture Reference
+
+Active Enclosure details now live in `systems/06-enclosure/`. Keep this file as compact supporting context for the architecture playbook.
 
 ## Core Definition
 

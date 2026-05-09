@@ -27,7 +27,7 @@ Use this playbook when the user says:
 
 ## Workflow
 
-1. Identify changed files and touched surfaces: firmware, services, deploy files, memory, skills, references, Brain brief, Supabase, MQTT, OTA, router/Wyse config, live controls, and physical-system assumptions.
+1. Identify changed files and touched surfaces: firmware, services, deploy files, memory, systems, skills, references, Brain brief, Supabase, MQTT, OTA, router/Wyse config, live controls, and physical-system assumptions.
 2. Read every new or changed documentation, memory, skill, or reference file end to end.
 3. Decide whether Brain `hardware_brief.md` needs an update for strategy-level system state, priorities, milestones, risks, blockers, canonical names, or cross-domain dependencies.
 4. Decide whether firmware behavior, telemetry coordinator behavior, MQTT topics, OTA behavior, Supabase telemetry/schema, router/Wyse configuration, or live-control paths changed.

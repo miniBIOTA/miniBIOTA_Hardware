@@ -129,6 +129,14 @@ Changing pump switching, thermostat logic, setpoint handling, telemetry serializ
 
 ---
 
+## System References
+
+- Control System sensor node architecture: `../systems/05-control-system/sensor-nodes.md`
+- Climate System pump/control architecture: `../systems/01-climate-system/pumps-and-control.md`
+- Atmospheric heat exchanger data sheet: `../systems/01-climate-system/atmospheric-heat-exchanger.md`
+
+---
+
 ## Current Observed Status - 2026-05-09
 
 - Biome OLED display is not on.
@@ -145,6 +153,4 @@ Changing pump switching, thermostat logic, setpoint handling, telemetry serializ
 - Connector plan is still open; XT30/JST-XH may be used, but the final connector standard has not been selected.
 - Wire color standard is not established yet.
 - Add branch fusing, switching, or emergency disconnects in a future safety pass.
-- Heat exchanger model/spec belongs in a future Climate System data sheet.
 - Update this file after the rewire and sensor replacement pass.
-

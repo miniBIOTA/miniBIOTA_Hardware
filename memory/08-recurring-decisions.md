@@ -11,10 +11,11 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 
 ## Architecture And Routing
 
-- Hardware uses `AGENTS.md`, `memory/`, `skills/`, and `skills/*/reference/` as the active detailed context.
+- Hardware uses `AGENTS.md`, biome folders, `systems/`, `memory/`, `skills/`, and `skills/*/reference/` as the active detailed context.
+- The six canonical hardware systems live under `systems/`; use those folders for cross-biome system architecture and data sheets.
 - The old Hardware `docs/` mirror pattern is retired; Brain should not mirror Hardware docs.
 - Brain gets strategy-level summaries in `6. miniBIOTA_Hardware/hardware_brief.md`, not raw setup guides.
-- Detailed setup and architecture material belongs in local skill reference files.
+- Detailed setup procedures belong in local skill reference files; detailed system architecture belongs in `systems/`.
 - Legacy Claude context is archived at `archive/legacy/CLAUDE.md` and is historical only.
 
 ## Control Model
