@@ -163,6 +163,6 @@ Publishing to a setpoint topic changes live control state and requires explicit 
 
 - Freshwater Lake: wire DS18B20 temperature probe and add sensor code.
 - Seagrass: add MQTT controls for wave rhythm and amplitude.
-- Biomes 2-5: rewire using XT30 power and JST-XH 2.54mm signal connectors.
+- Biomes 2-5: rewire sensor/controller harnesses to resolve SHT31 wiring and connection-quality faults. Final connector standard is still open; XT30 power and JST-XH 2.54mm signal connectors are candidates, not settled requirements.
 - Deploy/configure Wyse coordinator service and Supabase `telemetry_snapshot` access.
 - History telemetry and setpoint command queues remain deferred.

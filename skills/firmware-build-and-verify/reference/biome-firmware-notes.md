@@ -2,7 +2,7 @@
 id: biome_firmware_notes
 title: Biome Firmware Notes
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [firmware, platformio, esp32, ota, sensors]
 ---
 # Biome Firmware Notes
@@ -12,10 +12,10 @@ tags: [firmware, platformio, esp32, ota, sensors]
 | Biome | Folder | Hostname | Firmware type | App status |
 |---|---|---|---|---|
 | 1. Freshwater Lake | `1. Freshwater Lake Biome/` | `biome1-lake` | WiFi + OTA + MQTT; no sensors | Offline expected |
-| 2. Lakeshore | `2. Lakeshore Biome/` | `biome2-lakeshore` | Full sensor + PWM pump | Healthy; atmo SHT31 null wiring fault |
-| 3. Lowland Meadow | `3. Lowland Meadow Biome/` | `biome3-meadow` | Full sensor + PWM pump | Healthy; atmo SHT31 intermittent wiring fault |
-| 4. Mangrove Forest | `4. Mangrove Forest Biome/` | `biome4-mangrove` | Full sensor + PWM pump | Healthy; bio SHT31 null wiring fault |
-| 5. Marine Shore | `5. Marine Shore Biome/` | `biome5-marine` | Full sensor + PWM pump | Healthy; bio SHT31 null wiring fault |
+| 2. Lakeshore | `2. Lakeshore Biome/` | `biome2-lakeshore` | Full sensor + PWM pump | Atmo SHT31 shows Sensor Err; biome display dim |
+| 3. Lowland Meadow | `3. Lowland Meadow Biome/` | `biome3-meadow` | Full sensor + PWM pump | Atmo SHT31 shows Sensor Err over unstable data |
+| 4. Mangrove Forest | `4. Mangrove Forest Biome/` | `biome4-mangrove` | Full sensor + PWM pump | Bio SHT31 appears water damaged; biome screen off |
+| 5. Marine Shore | `5. Marine Shore Biome/` | `biome5-marine` | Full sensor + PWM pump | Currently working; humidity display artifact |
 | 6. Seagrass Meadow | `6. Seagrass Meadow Biome/` | `biome6-seagrass` | Wave/tide stepper + WiFi/OTA on Core 0 | Wave motor only |
 
 ## OTA Status
@@ -80,4 +80,4 @@ Changing this behavior is a live-biosphere control change and requires explicit 
 
 - Freshwater Lake: wire DS18B20 temperature probe and add sensor code when hardware exists.
 - Seagrass Meadow: add MQTT controls for wave rhythm and amplitude when scoped.
-- Biomes 2-5: rewire using XT30 power and JST-XH 2.54mm signal connectors to resolve SHT31 wiring faults.
+- Biomes 2-5: rewire sensor/controller harnesses to resolve SHT31 wiring and connection-quality faults. Final connector standard is still open; XT30 power and JST-XH 2.54mm signal connectors are candidates, not settled requirements.

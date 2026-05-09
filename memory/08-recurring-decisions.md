@@ -2,7 +2,7 @@
 id: recurring_hardware_decisions
 title: Recurring Decisions
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [memory, decisions, rules]
 ---
 # Recurring Decisions
@@ -37,7 +37,7 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 
 - Deployed sensor nodes currently use SHT31 sensors on biomes 2-5.
 - Biomes 2-5 have known SHT31 wiring faults; firmware should tolerate `null` readings until rewire.
-- Planned rewire uses XT30 for power and JST-XH 2.54mm for signal.
+- Connector standard for the biomes 2-5 rewire remains open. XT30 for power and JST-XH 2.54mm for signal are candidates, not settled requirements.
 - Treat any old SHT4x wording as future/legacy unless the affected hardware or firmware has been updated.
 
 ## Telemetry

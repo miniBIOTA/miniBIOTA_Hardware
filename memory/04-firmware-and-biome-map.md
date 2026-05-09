@@ -2,7 +2,7 @@
 id: hardware_firmware_biome_map
 title: Firmware And Biome Map
 domain: engineering_and_hardware
-last_updated: 2026-05-05
+last_updated: 2026-05-09
 tags: [memory, firmware, platformio, biomes, ota]
 ---
 # Firmware And Biome Map
@@ -14,10 +14,10 @@ Hardware firmware is organized as one PlatformIO project per biome folder. Folde
 | Folder | Biome | biome_id | Firmware role | Current watchout |
 |---|---|---:|---|---|
 | `1. Freshwater Lake Biome/` | Freshwater Lake | 1 | WiFi, OTA, MQTT; no sensors yet | Offline expected |
-| `2. Lakeshore Biome/` | Lakeshore | 2 | Sensor node + PWM pump | Atmo SHT31 wiring fault returns null |
-| `3. Lowland Meadow Biome/` | Lowland Meadow | 3 | Sensor node + PWM pump | Atmo SHT31 intermittent wiring fault |
-| `4. Mangrove Forest Biome/` | Mangrove Forest | 4 | Sensor node + PWM pump | Bio SHT31 wiring fault returns null |
-| `5. Marine Shore Biome/` | Marine Shore | 5 | Sensor node + PWM pump | Bio SHT31 wiring fault returns null |
+| `2. Lakeshore Biome/` | Lakeshore | 2 | Sensor node + PWM pump | Atmo SHT31 shows Sensor Err; biome display dim |
+| `3. Lowland Meadow Biome/` | Lowland Meadow | 3 | Sensor node + PWM pump | Atmo SHT31 shows Sensor Err over unstable data |
+| `4. Mangrove Forest Biome/` | Mangrove Forest | 4 | Sensor node + PWM pump | Bio SHT31 appears water damaged; biome screen off |
+| `5. Marine Shore Biome/` | Marine Shore | 5 | Sensor node + PWM pump | Currently working; humidity display artifact |
 | `6. Seagrass Meadow Biome/` | Seagrass Meadow | 6 | Wave/tide stepper + WiFi/OTA | Sensor telemetry not part of current node role |
 
 ## Firmware Status

@@ -79,10 +79,10 @@ Chat history and private model memory are never source of truth. Durable project
 | Folder | Biome | Supabase biome_id | Notes |
 |---|---|---:|---|
 | `1. Freshwater Lake Biome/` | Freshwater Lake | 1 | No sensors yet; offline expected |
-| `2. Lakeshore Biome/` | Lakeshore | 2 | Sensor node; known atmo SHT31 wiring fault |
-| `3. Lowland Meadow Biome/` | Lowland Meadow | 3 | Sensor node; known atmo SHT31 intermittent wiring fault |
-| `4. Mangrove Forest Biome/` | Mangrove Forest | 4 | Sensor node; known bio SHT31 wiring fault |
-| `5. Marine Shore Biome/` | Marine Shore | 5 | Sensor node; known bio SHT31 wiring fault |
+| `2. Lakeshore Biome/` | Lakeshore | 2 | Sensor node; atmo SHT31 currently shows Sensor Err |
+| `3. Lowland Meadow Biome/` | Lowland Meadow | 3 | Sensor node; atmo SHT31 shows Sensor Err over unstable data |
+| `4. Mangrove Forest Biome/` | Mangrove Forest | 4 | Sensor node; bio SHT31 appears water damaged and biome screen is off |
+| `5. Marine Shore Biome/` | Marine Shore | 5 | Sensor node; currently working, with humidity display artifact |
 | `6. Seagrass Meadow Biome/` | Seagrass Meadow | 6 | Wave/tide stepper node |
 
 ## Safety Rules
@@ -94,10 +94,10 @@ Chat history and private model memory are never source of truth. Durable project
 
 ## Current Hardware Watchouts
 - All 6 biome nodes have live firmware; biomes 1-5 were USB-flashed on 2026-04-25 and OTA works going forward.
-- Biomes 2-5 have wiring faults causing some SHT31 readings to be `null`; firmware is expected to emit valid JSON `null`, not `nan`.
+- Biomes 2-5 have sensor wiring/connection-quality risks and some water-damaged SHT31 modules; firmware is expected to emit valid JSON `null`, not `nan`, for missing readings.
 - Biome 1 has no sensors installed and may appear offline.
 - Biome 6 is wave-motor-only and not part of the sensor telemetry set yet.
-- The planned rewire for biomes 2-5 uses XT30 for power and JST-XH 2.54mm for signal.
+- Biomes 2-5 need a sensor/controller rewire; connector standard remains open. XT30 for power and JST-XH 2.54mm for signal are candidates, not settled requirements.
 - Firmware previously fixed three important bugs: WiFi hang timeout, non-blocking MQTT reconnect, and NaN-to-null telemetry serialization.
 - `services/telemetry_coordinator.py` is read-only by design: it subscribes to MQTT and writes snapshots, but does not publish setpoints, pump commands, actuator commands, or firmware updates.
 

@@ -31,7 +31,7 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 ## Content Agent
 
 - Hardware downtime, rewire sessions, visible failures, rain events, wave/tide behavior, and sensor changes can affect filming and story planning.
-- Coordinate before scheduling content that depends on biomes 2-5 during the planned XT30/JST-XH rewire.
+- Coordinate before scheduling content that depends on biomes 2-5 during the planned sensor/controller rewire.
 
 ## Research / Ecosystem
 
