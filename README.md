@@ -8,7 +8,7 @@ Firmware, control-network, telemetry, and hardware operations repo for the miniB
 powershell -ExecutionPolicy Bypass -File "_system/codex_session_start.ps1"
 ```
 
-Then read the files listed by the helper, especially `AGENTS.md`, `memory/00-index.md`, Brain `agent_memory.md`, the Hardware engineering brief, and the relevant biome, system, memory, playbook, or reference files.
+Then read the files listed by the helper, especially `AGENTS.md`, `memory/00-index.md`, the Company Hardware brief when current reporting context matters, the Brain archive lookup only when needed, and the relevant biome, system, memory, playbook, or reference files.
 
 ## Repository Shape
 
@@ -85,13 +85,18 @@ python services/telemetry_coordinator.py --dry-run
 
 MQTT publishing, Supabase schema changes, Wyse deployment, and command processing remain separate approval-gated actions.
 
-## Brain Link
+## Company Link
 
-This domain reports to the Strategy Agent through:
+This domain reports active operating state to Company through:
 
-`M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
+`M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_overview.md`
+`M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`
 
-Update that brief when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change.
+Brain transition/archive fallback:
+
+`M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`
+
+Update or flag the Company Hardware reports when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change. Keep the Brain archive lookup aligned only while Brain retirement is in progress.
 
 Brain no longer mirrors Hardware docs. Use this repo's `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/` for detailed Hardware context.
 

@@ -38,7 +38,7 @@ Use this playbook when Josue says things like:
 5. Update memory concisely. Prefer one durable rule over a long recap.
 6. Update `memory/00-index.md` only when a new file, major routing change, or new playbook needs discoverability.
 7. Update skill reference files only when exact setup/protocol detail changes.
-8. Update the Brain engineering brief when strategy-level state changes.
+8. Update or flag the Company Hardware reports when manager-facing state changes, and keep the Brain archive lookup aligned only while Brain retirement needs it.
 9. Read every changed memory/reference file end to end.
 
 ## Expected Output
@@ -50,7 +50,7 @@ Memory proposal:
 - Existing duplicate check:
 - Target file:
 - Proposed wording:
-- Brain brief update:
+- Company/Brain report update:
 
 After update:
 - Changed files:
@@ -70,4 +70,4 @@ After update:
 - Do not create uncontrolled memory bloat.
 - Do not duplicate detailed reference files inside memory.
 - Do not overwrite implemented firmware/service truth.
-- Do not write raw setup detail into the Brain engineering brief.
+- Do not write raw setup detail into Company reports or the Brain archive lookup.

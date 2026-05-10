@@ -6,8 +6,8 @@ The Hardware Agent treats database access as a live-system boundary. Read teleme
 
 - Database access needed: Yes, mostly read-only.
 - Default mode: Read-only telemetry and structured status checks.
-- MCP: Brain has broad Supabase MCP read awareness. This domain may use MCP read access for relevant telemetry/hardware records, but should escalate cross-domain interpretation to Brain.
-- Preferred path: Brain helper functions in `M:\miniBIOTA\miniBIOTA_Brain\_system\minibiota_tools.py` and approved service code such as the telemetry coordinator.
+- MCP: Company owns active cross-domain operating interpretation. Brain may still provide broad Supabase MCP read awareness during transition; this domain may use MCP read access for relevant telemetry/hardware records, but should escalate cross-domain interpretation to Company.
+- Preferred path: approved service code such as the telemetry coordinator for Hardware-owned workflows, App Planner for project/task records, and Use approved service code, App Planner, Company/domain-owned helpers, and MCP/read-only awareness for controlled helper paths. Brain tool code is archive/recovery lookup only.
 - Secrets: Local environment variables or ignored local config only.
 
 ## Table Responsibilities
@@ -32,11 +32,16 @@ Hardware work is managed in the App Planner through Supabase `work_projects` and
 - Creating projects/tasks, linking tasks to projects, adding subtasks, changing status, marking done, or archiving are live operational writes.
 - At closeout, offer to update Planner task status when completed work maps clearly to an open task.
 
-## Brain Reporting
+## Company Reporting
 
-At session close, update Brain when hardware state changes:
+At session close, update or flag Company Hardware reports when hardware state changes:
 
-- `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_overview.md`
-- `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
+- `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_overview.md`
+- `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`
 
-Report firmware status, telemetry status, live-system risks, deployment changes, wiring issues, and cross-domain dependencies back to Brain.
+Brain transition/archive fallback while retirement is in progress:
+
+- `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_overview.md`
+- `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`
+
+Report firmware status, telemetry status, live-system risks, deployment changes, wiring issues, and cross-domain dependencies back to Company. Keep the Brain archive lookup aligned only when Brain transition state still needs it.

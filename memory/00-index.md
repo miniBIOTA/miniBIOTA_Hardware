@@ -26,14 +26,14 @@ For every Hardware session:
 
 | File | Use When |
 |---|---|
-| `memory/01-agent-purpose.md` | Understanding the Hardware Agent's role, boundaries, and relationship to Josue and Brain |
+| `memory/01-agent-purpose.md` | Understanding the Hardware Agent's role, boundaries, and relationship to Josue, Company, and Brain |
 | `memory/02-system-architecture.md` | Orienting around physical, hydrological, climate, rain, and enclosure architecture |
 | `memory/03-control-network.md` | Working with Opal, Wyse, Mosquitto, ESP32 nodes, MQTT, and sensor topology |
 | `memory/04-firmware-and-biome-map.md` | Choosing the correct PlatformIO project, biome ID, firmware status, and build/upload path |
-| `memory/05-database-access.md` | Hardware database access boundaries, owned/read/write tables, and Brain reporting expectations |
+| `memory/05-database-access.md` | Hardware database access boundaries, owned/read/write tables, and Company reporting expectations |
 | `memory/05-telemetry-and-data-flow.md` | Working with App Monitoring, Wyse coordinator, Supabase telemetry, website snapshots, or MQTT payloads |
 | `memory/06-hardware-safety-rules.md` | Checking approval gates and live-biosphere safety rules |
-| `memory/07-cross-agent-relationships.md` | Deciding what belongs in Hardware, Brain, App, Web, Content, Research, or Supabase |
+| `memory/07-cross-agent-relationships.md` | Deciding what belongs in Hardware, Company, Brain, App, Web, Content, Research, or Supabase |
 | `memory/08-recurring-decisions.md` | Checking durable decisions that should not be rediscovered each session |
 | `memory/inbox.md` | Temporary holding area for candidate durable memory before it is promoted to a named memory file |
 
@@ -48,7 +48,7 @@ These are repo-local task playbooks, not globally installed Codex skills. Load t
 | `skills/telemetry-coordinator/SKILL.md` | Working on the Wyse telemetry coordinator, website snapshot contract, Supabase telemetry plan, or coordinator tests |
 | `skills/hardware-architecture-reference/SKILL.md` | Answering physical, hydrological, climate, rain, enclosure, or system-boundary questions |
 | `skills/update-hardware-memory/SKILL.md` | Promoting durable Hardware decisions or repeated instructions into memory safely |
-| `skills/hardware-session-closeout/SKILL.md` | Closing Hardware sessions with verification, Brain brief checks, and live-system non-change confirmation |
+| `skills/hardware-session-closeout/SKILL.md` | Closing Hardware sessions with verification, Company report checks, Brain transition checks, and live-system non-change confirmation |
 
 ## System Data Sheets
 
@@ -71,6 +71,6 @@ These are repo-local task playbooks, not globally installed Codex skills. Load t
 - Firmware source and `platformio.ini` remain the truth for deployed code behavior.
 - `services/` and `deploy/` remain the truth for host-side telemetry coordinator behavior.
 - Supabase remains canonical for structured telemetry, task, project, and domain records when those tables exist.
-- Brain `6. miniBIOTA_Hardware/hardware_brief.md` remains the strategy-level current-state brief.
+- Company `domains/hardware/hardware_brief.md` and `domains/hardware/hardware_overview.md` are the active manager-facing current-state reports; Brain `6. miniBIOTA_Hardware/hardware_brief.md` remains transition/archive context while Brain retirement is in progress.
 - `archive/legacy/CLAUDE.md` is historical reference only, not active startup context.
 - The old Hardware `docs/` mirror pattern is retired.

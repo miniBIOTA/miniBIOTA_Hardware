@@ -1,6 +1,6 @@
 ---
 name: hardware-session-closeout
-description: Close Hardware sessions with changed files, verification, Brain brief implications, live-system non-change checks, and unresolved questions.
+description: Close Hardware sessions with changed files, verification, Company report implications, Brain transition implications, live-system non-change checks, and unresolved questions.
 ---
 # Hardware Session Closeout
 
@@ -27,9 +27,9 @@ Use this playbook when the user says:
 
 ## Workflow
 
-1. Identify changed files and touched surfaces: firmware, services, deploy files, memory, systems, skills, references, Brain brief, Supabase, MQTT, OTA, router/Wyse config, live controls, and physical-system assumptions.
+1. Identify changed files and touched surfaces: firmware, services, deploy files, memory, systems, skills, references, Company reports, Supabase, MQTT, OTA, router/Wyse config, live controls, and physical-system assumptions.
 2. Read every new or changed documentation, memory, skill, or reference file end to end.
-3. Decide whether Brain `hardware_brief.md` needs an update for strategy-level system state, priorities, milestones, risks, blockers, canonical names, or cross-domain dependencies.
+3. Decide whether Company Hardware reports need an update for manager-facing system state, priorities, milestones, risks, blockers, canonical names, or cross-domain dependencies, and whether the Brain archive lookup still needs alignment.
 4. Decide whether firmware behavior, telemetry coordinator behavior, MQTT topics, OTA behavior, Supabase telemetry/schema, router/Wyse configuration, or live-control paths changed.
 5. Run the smallest meaningful verification for the touched surface when practical.
 6. Check whether completed work maps to an open App Planner Hardware task.
@@ -37,7 +37,7 @@ Use this playbook when the user says:
 8. Run `git diff --name-only`.
 9. Run `git status --short --branch`.
 10. Confirm no firmware upload, MQTT command, live control, schema change, deployment change, router/Wyse change, Planner write, or physical-world action occurred unless explicitly approved.
-11. Report unresolved questions and any deferred Brain brief, task, deployment, or domain follow-up.
+11. Report unresolved questions and any deferred Company report, task, deployment, or domain follow-up.
 
 ## Expected Output
 
@@ -58,7 +58,7 @@ Unresolved questions:
 ## Write And Approval Rules
 
 - Do not upload firmware, publish MQTT commands, change router/Wyse configuration, change telemetry schema, or touch live controls from closeout.
-- Do not update Brain hardware brief unless strategy-level state changed and the user has not deferred it.
+- Do not update Company Hardware reports or the Brain archive lookup unless manager-facing state changed and the user has not deferred it.
 - Do not write Supabase telemetry/control records without explicit approval and readback.
 - Do not create, edit, complete, archive, or delete App Planner project/task records without explicit approval and readback.
 - Do not commit, push, deploy, or restart services unless explicitly scoped.

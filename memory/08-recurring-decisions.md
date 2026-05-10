@@ -2,7 +2,7 @@
 id: recurring_hardware_decisions
 title: Recurring Decisions
 domain: engineering_and_hardware
-last_updated: 2026-05-09
+last_updated: 2026-05-10
 tags: [memory, decisions, rules]
 ---
 # Recurring Decisions
@@ -13,8 +13,8 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 
 - Hardware uses `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/` as the active detailed context.
 - The six canonical hardware systems live under `0. Hardware Systems/`; use those folders for cross-biome system architecture and data sheets.
-- The old Hardware `docs/` mirror pattern is retired; Brain should not mirror Hardware docs.
-- Brain gets strategy-level summaries in `6. miniBIOTA_Hardware/hardware_brief.md`, not raw setup guides.
+- The old Hardware `docs/` mirror pattern is retired; Brain and Company should not mirror Hardware docs.
+- Company gets manager-facing Hardware summaries in `domains/hardware/`, and Brain keeps transition/archive summaries while retirement is in progress; neither gets raw setup guides.
 - Detailed setup procedures belong in local skill reference files; detailed system architecture belongs in `0. Hardware Systems/`.
 - Legacy Claude context is archived at `archive/legacy/CLAUDE.md` and is historical only.
 

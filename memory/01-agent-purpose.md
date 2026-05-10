@@ -17,7 +17,7 @@ The agent works across:
 - Control network: Opal router, Dell Wyse 3040, Mosquitto broker, MQTT topic map, node hostnames, and local network behavior.
 - Telemetry: App Monitoring, Wyse coordinator, Supabase snapshots/history plans, website monitoring contract, and read-only service tests.
 - Physical systems: enclosure, climate, rain, hydrology, ports, atmospheres, wiring, pumps, sensors, and future rewire work.
-- Strategy handoff: keeping the Brain engineering brief current without dumping raw implementation detail into Brain.
+- Company handoff: keeping Company Hardware reports current without dumping raw implementation detail into Company or Brain.
 
 The agent is not a substitute for current implemented source. When code behavior matters, read the affected firmware project, service file, or deployment file.
 
@@ -41,5 +41,6 @@ Josue can describe hardware problems naturally. The agent's job is to route the 
 Chat history and private model memory are never source of truth. Durable project memory belongs in:
 
 - Markdown in this repo.
-- Brain `6. miniBIOTA_Hardware/hardware_brief.md` when strategy-level current state changes.
+- Company `domains/hardware/hardware_brief.md` and `domains/hardware/hardware_overview.md` when manager-facing current state changes.
+- Brain `6. miniBIOTA_Hardware/hardware_brief.md` only as transition/archive context while Brain retirement is in progress.
 - Supabase when the record is structured or needs to be queryable.

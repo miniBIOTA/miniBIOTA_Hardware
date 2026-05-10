@@ -3,7 +3,7 @@
 ## What This Repo Is
 `miniBIOTA_Hardware` is the firmware, control-network, and hardware operations repo for the miniBIOTA closed biosphere. It contains one PlatformIO/Arduino ESP32 project per biome, repo-local durable memory, repo-local task playbooks, exact hardware references, deployment helpers, and telemetry coordinator code.
 
-Codex is the primary operating interface for this repo. Legacy Claude context has been archived at `archive/legacy/CLAUDE.md` for historical investigation only. Active operating rules belong in `AGENTS.md`, `memory/`, `0. Hardware Systems/`, `skills/`, `skills/*/reference/`, Brain `hardware_brief.md`, or Supabase when the record is structured.
+Codex is the primary operating interface for this repo. Legacy Claude context has been archived at `archive/legacy/CLAUDE.md` for historical investigation only. Active operating rules belong in `AGENTS.md`, `memory/`, `0. Hardware Systems/`, `skills/`, `skills/*/reference/`, Company Hardware reports, the Brain archive lookup, or Supabase when the record is structured.
 
 ## Architecture
 
@@ -19,7 +19,8 @@ Codex is the primary operating interface for this repo. Legacy Claude context ha
 | `deploy/` | Deployment examples for Wyse/systemd services |
 | `_system/` | PowerShell session helpers |
 | Supabase / App Planner | Structured telemetry plus live Hardware project/task records |
-| Brain engineering brief | Strategy-level current state and cross-domain coordination |
+| Company Hardware reports | Manager-facing current state, priorities, risks, and cross-domain coordination |
+| Brain archive lookup | Protocol/archive fallback while Brain-to-Company retirement is in progress |
 
 There is no active `docs/` mirror pattern for Hardware. Detailed source material now lives in biome folders, `0. Hardware Systems/`, memory, local playbooks, and skill reference files.
 
@@ -33,7 +34,7 @@ There is no active `docs/` mirror pattern for Hardware. Detailed source material
 - Opal GL-SFT1200 router for the isolated biome network.
 - OTA firmware upload after each node has been USB-flashed once.
 - Python Wyse telemetry coordinator under `services/`.
-- Brain tool layer at `M:\miniBIOTA\miniBIOTA_Brain\_system\minibiota_tools.py`.
+- Use MCP/read-only awareness and Company/domain-owned helpers. Brain tool code is historical/recovery context only for normal workflows.
 
 ## Startup Sequence
 For a full Codex bootstrap, run:
@@ -46,9 +47,10 @@ If working manually:
 
 1. Read `AGENTS.md`.
 2. Read `memory/00-index.md`.
-3. Read `M:\miniBIOTA\miniBIOTA_Brain\_system\agent_memory.md`.
-4. Read `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`.
-5. Load only the memory files, `0. Hardware Systems/` data sheets, local playbooks, skill reference files, firmware project, service code, or deployment reference needed for the task.
+3. Read `M:\miniBIOTA\miniBIOTA_Company\company_overview.md` and `M:\miniBIOTA\miniBIOTA_Company\company_brief.md` when cross-domain operating context matters.
+4. Read `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md` when current Hardware reporting context matters.
+5. Read `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md` only as transition/archive context while Brain retirement is in progress.
+6. Load only the memory files, `0. Hardware Systems/` data sheets, local playbooks, skill reference files, firmware project, service code, or deployment reference needed for the task.
 
 ## Routing
 
@@ -73,11 +75,12 @@ Use this hierarchy when sources disagree:
 6. `memory/` for compressed durable knowledge.
 7. Local `skills/` playbooks for repeatable task workflows.
 8. Skill `reference/` files for supporting setup procedures, deployment detail, and legacy architecture context.
-9. Brain `6. miniBIOTA_Hardware/hardware_brief.md` for strategy-level current state.
-10. Supabase for structured/queryable records and telemetry schema truth.
-11. `archive/legacy/CLAUDE.md` only for historical investigation; it is not active source of truth.
+9. Company `domains/hardware/hardware_brief.md` and `domains/hardware/hardware_overview.md` for manager-facing current state and cross-domain coordination.
+10. Brain `6. miniBIOTA_Hardware/hardware_brief.md` for transition/archive state while Brain retirement is in progress.
+11. Supabase for structured/queryable records and telemetry schema truth.
+12. `archive/legacy/CLAUDE.md` only for historical investigation; it is not active source of truth.
 
-Chat history and private model memory are never source of truth. Durable project memory belongs in Markdown in this repo, in the Brain engineering brief, or in Supabase when it is structured data.
+Chat history and private model memory are never source of truth. Durable project memory belongs in Markdown in this repo, in Company Hardware reports or the Brain archive lookup when manager-facing state changes, or in Supabase when it is structured data.
 
 ## Biome Project Map
 | Folder | Biome | Supabase biome_id | Notes |
@@ -123,17 +126,22 @@ pio run -e esp32dev_ota -t upload --project-dir "M:\miniBIOTA\miniBIOTA_Hardware
 
 USB upload is for first flash or recovery. OTA upload is the normal path after current firmware is installed. Do not run upload commands without explicit approval.
 
-## Brain Relationship
-This repo reports to the Strategy Agent through:
+## Company Relationship
+This repo reports active operating state to Company through:
 
-`M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`
+`M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_overview.md`
+`M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`
 
-Update that brief at session end when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change. Keep implementation details, setup guides, and exact hardware references in this repo, especially in biome folders and `0. Hardware Systems/`.
+Brain transition/archive fallback:
 
-Brain no longer mirrors Hardware docs. Brain should route deeper Hardware work to this repo's `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
+`M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`
+
+Update or flag the Company Hardware reports at session end when system state, active priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change. Keep the Brain archive lookup aligned only while Brain retirement is in progress. Keep implementation details, setup guides, and exact hardware references in this repo, especially in biome folders and `0. Hardware Systems/`.
+
+Brain no longer mirrors Hardware docs. Company and Brain should route deeper Hardware work to this repo's `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
 
 ## Write Policy
-Respect `MINIBIOTA_WRITE_MODE` from Brain when available:
+Respect `MINIBIOTA_WRITE_MODE` from Company/Brain when available:
 
 | Mode | Behavior |
 |---|---|
@@ -179,4 +187,4 @@ Unresolved questions:
 - item or "None"
 ```
 
-If local source files changed in a way the Strategy Agent needs, update the Brain engineering brief before closing unless the user explicitly defers it. Brain exports should be rebuilt after Brain source files change unless explicitly deferred.
+If local source files changed in a way Company needs, update or flag the Company Hardware reports before closing unless the user explicitly defers it. Keep the Brain archive lookup and Brain exports aligned only when Brain source files change.

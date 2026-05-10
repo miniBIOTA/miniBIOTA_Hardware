@@ -2,19 +2,20 @@
 id: hardware_cross_agent_relationships
 title: Cross-Agent Relationships
 domain: engineering_and_hardware
-last_updated: 2026-05-09
+last_updated: 2026-05-10
 tags: [memory, brain, app, web, content, research, supabase]
 ---
 # Cross-Agent Relationships
 
 Hardware owns implementation detail for the physical biosphere, firmware, control network, and telemetry producer surfaces. Other domains consume summarized state or structured outputs.
 
-## Brain / Strategy Agent
+## Company / Brain
 
-- Brain strategy state lives in `M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md`.
-- Hardware updates the brief when system state, priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change.
-- Brain no longer mirrors Hardware docs. Brain routes detailed Hardware work to this repo's `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
-- Keep firmware details, setup guides, and exact architecture references in this repo, especially biome folders and `0. Hardware Systems/`, not in the Brain brief.
+- Active Hardware operating summaries live in `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_overview.md` and `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`.
+- Company reporting state lives in `M:\miniBIOTA\miniBIOTA_Company\domains\hardware\hardware_brief.md`. Brain copies are historical/archive lookup only.
+- Hardware updates or flags Company reports when system state, priorities, milestones, risks, blockers, cross-domain dependencies, or canonical system names change.
+- Brain no longer mirrors Hardware docs. Company and Brain route detailed Hardware work to this repo's `AGENTS.md`, biome folders, `0. Hardware Systems/`, `memory/`, `skills/`, and `skills/*/reference/`.
+- Keep firmware details, setup guides, and exact architecture references in this repo, especially biome folders and `0. Hardware Systems/`, not in Company summaries or the Brain archive lookup.
 
 ## App Agent
 
@@ -36,7 +37,7 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 
 - Hardware downtime, rewire sessions, visible failures, rain events, wave/tide behavior, and sensor changes can affect filming and story planning.
 - Coordinate before scheduling content that depends on biomes 2-5 during the planned sensor/controller rewire.
-- The six public system names in `0. Hardware Systems/README.md` must stay aligned with website/App/Brain system records.
+- The six public system names in `0. Hardware Systems/README.md` must stay aligned with website, App, and Company system records. Brain is historical/archive lookup only.
 
 ## Research / Ecosystem
 

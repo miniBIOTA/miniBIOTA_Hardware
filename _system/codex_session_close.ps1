@@ -1,53 +1,31 @@
-param(
-    [switch]$StageAll,
-    [string]$CommitMessage,
-    [switch]$Push
-)
-
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Continue"
 
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = Split-Path -Parent $scriptRoot
+$companyRoot = "M:\miniBIOTA\miniBIOTA_Company"
+$companyOverview = Join-Path $companyRoot "domains\hardware\hardware_overview.md"
+$companyBrief = Join-Path $companyRoot "domains\hardware\hardware_brief.md"
 
-Set-Location $repoRoot
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 Write-Host "== miniBIOTA Hardware Codex Session Close =="
-Write-Host "Repo: $repoRoot"
+Write-Host "Repo:   $repoRoot"
+Write-Host "Report: $companyBrief"
 Write-Host ""
 
-Write-Host "[1/3] Git status"
-git status --short
+Set-Location $repoRoot
+Write-Host "Git status:"
+if (Test-Path (Join-Path $repoRoot ".git")) {
+    git status --short --branch
+} else {
+    Write-Host "Git repository not initialized in this folder."
+}
 Write-Host ""
 
-Write-Host "[2/3] Reminder"
-Write-Host "If hardware state, priorities, milestones, risks, or cross-domain dependencies changed,"
-Write-Host "update M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md."
-Write-Host "Hardware no longer uses a Brain docs mirror. Keep detailed context in memory, skills, and skills/*/reference."
-Write-Host ""
-
-Write-Host "[3/3] Git actions"
-if ($StageAll) {
-    Write-Host "Running: git add ."
-    git add .
-    Write-Host ""
-} else {
-    Write-Host "Skipping git add. Pass -StageAll to stage changes."
-}
-
-if ($CommitMessage) {
-    Write-Host "Running: git commit -m `"$CommitMessage`""
-    git commit -m $CommitMessage
-    Write-Host ""
-} else {
-    Write-Host "Skipping commit. Pass -CommitMessage to create a commit."
-}
-
-if ($Push) {
-    if (-not $CommitMessage) {
-        throw "Cannot push without a commit in this helper. Pass -CommitMessage and usually -StageAll."
-    }
-    Write-Host "Running: git push"
-    git push
-} else {
-    Write-Host "Skipping push. Pass -Push to push the current branch."
-}
+Write-Host "Closeout reminders:"
+Write-Host "- Promote durable rules, decisions, corrections, and recurring hazards into local memory/playbooks."
+Write-Host "- Update or flag Company reporting when manager-facing Hardware state changed: $companyBrief"
+Write-Host "- Keep detailed implementation context in this repo's memory, skills, references, code, and structured records."
+Write-Host "- Brain is historical/archive lookup only unless a transition plan explicitly asks for it."
+Write-Host "- Do not run live-control paths, firmware deployment, telemetry writes, setpoint changes, or hardware-affecting commands without explicit approval."
+Write-Host "- Run the smallest meaningful verification and report changed files."

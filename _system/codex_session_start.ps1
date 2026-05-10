@@ -1,52 +1,46 @@
-$ErrorActionPreference = "Continue"
+﻿$ErrorActionPreference = "Continue"
 
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = Split-Path -Parent $scriptRoot
-$brainRoot = "M:\miniBIOTA\miniBIOTA_Brain"
+$companyRoot = "M:\miniBIOTA\miniBIOTA_Company"
+$companyRegistry = Join-Path $companyRoot "_system\agent_repo_registry.md"
+$companyOverview = Join-Path $companyRoot "domains\hardware\hardware_overview.md"
+$companyBrief = Join-Path $companyRoot "domains\hardware\hardware_brief.md"
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $env:PYTHONIOENCODING = "utf-8"
 
 Write-Host "== miniBIOTA Hardware Codex Session Start =="
-Write-Host "Repo:  $repoRoot"
-Write-Host "Brain: $brainRoot"
+Write-Host "Repo:    $repoRoot"
+Write-Host "Company: $companyRoot"
+Write-Host "Report:  $companyBrief"
 Write-Host ""
 
-Write-Host "[1/3] Loading Brain session status..."
-$pythonScript = @"
-import sys
-sys.path.insert(0, r"M:\miniBIOTA\miniBIOTA_Brain\_system")
-try:
-    from minibiota_tools import session_init, describe_write_policy
-    state = session_init(agent_interface="codex")
-    print(state["greeting"])
-    print("")
-    print(f"Write policy: {describe_write_policy()['write_mode']}")
-    if state.get("supabase_connected"):
-        print("SUPABASE: connected -- live tool calls are available")
-    else:
-        print("SUPABASE: offline (sandbox or network restriction)")
-        print("  -> Live tool calls will fail until Supabase is reachable.")
-        print("  -> Do NOT fall back to vault-only mode for tasks requiring live records.")
-        print("  -> Retry the specific tool call after requesting network access.")
-except Exception as exc:
-    print(f"Could not load Brain tool layer: {exc}")
-    print("Read Brain agent_memory.md manually before live-record work.")
-"@
-$pythonScript | python -
+Write-Host "[1/3] Write policy"
+if ($env:MINIBIOTA_WRITE_MODE) {
+    Write-Host "MINIBIOTA_WRITE_MODE: $env:MINIBIOTA_WRITE_MODE"
+} else {
+    Write-Host "MINIBIOTA_WRITE_MODE is not set. Follow AGENTS.md and ask before high-impact writes."
+}
+Write-Host "Do not run live-control paths, firmware deployment, telemetry writes, setpoint changes, or hardware-affecting commands without explicit approval."
 Write-Host ""
 
 Write-Host "[2/3] Git status"
 Set-Location $repoRoot
-git status --short --branch
+if (Test-Path (Join-Path $repoRoot ".git")) {
+    git status --short --branch
+} else {
+    Write-Host "Git repository not initialized in this folder."
+}
 Write-Host ""
 
 Write-Host "[3/3] Read these files first:"
 Write-Host "- AGENTS.md"
 Write-Host "- memory/00-index.md"
-Write-Host "- M:\miniBIOTA\miniBIOTA_Brain\_system\agent_memory.md"
-Write-Host "- M:\miniBIOTA\miniBIOTA_Brain\6. miniBIOTA_Hardware\hardware_brief.md"
-Write-Host "- Relevant memory files, repo-local skills, skill references, service files, or biome firmware project"
-Write-Host "- archive/legacy/CLAUDE.md is historical only, not startup context"
+Write-Host "- relevant memory files and skills/*/SKILL.md playbooks"
+Write-Host "- Company registry when routing or reporting matters: $companyRegistry"
+Write-Host "- Company report when manager-facing state matters: $companyBrief"
+Write-Host "- Company overview when broad domain context matters: $companyOverview"
+Write-Host "- Brain only for historical, archive, transition, or recovery lookup"
 Write-Host ""
-Write-Host "Safety: confirm before firmware uploads, MQTT commands, pump/thermostat changes, or live control writes."
+Write-Host "Startup complete. Normal routing and reporting now go through Company/domain sources, not Brain."

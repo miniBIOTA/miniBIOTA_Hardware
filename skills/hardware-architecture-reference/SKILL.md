@@ -41,7 +41,7 @@ Use this playbook when Josue says things like:
 2. Read the relevant memory and exact `0. Hardware Systems/` file before answering detailed questions.
 3. Keep current state, target state, and planned future features separate.
 4. Use current canonical biome names: Freshwater Lake, Lakeshore, Lowland Meadow, Mangrove Forest, Marine Shore, Seagrass Meadow.
-5. When architecture changes affect Brain strategy state, update the Brain engineering brief at closeout.
+5. When architecture changes affect manager-facing strategy state, update or flag the Company Hardware reports at closeout and keep the Brain archive lookup aligned only while Brain retirement needs it.
 6. Do not make physical-world recommendations that alter live conditions without naming safety implications and getting approval when needed.
 
 ## Expected Output
