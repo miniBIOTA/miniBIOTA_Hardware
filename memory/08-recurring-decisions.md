@@ -2,7 +2,7 @@
 id: recurring_hardware_decisions
 title: Recurring Decisions
 domain: engineering_and_hardware
-last_updated: 2026-05-10
+last_updated: 2026-05-11
 tags: [memory, decisions, rules]
 ---
 # Recurring Decisions
@@ -44,10 +44,11 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 ## Telemetry
 
 - App Monitoring is the live operator surface over direct MQTT.
-- The first Wyse telemetry coordinator implementation is read-only.
+- The Wyse telemetry coordinator is deployed as a read-only producer on the Dell Wyse.
 - Coordinator history inserts and setpoint command polling remain deferred until explicitly scoped.
 - Website telemetry should be public-safe and read-only.
 - `telemetry_snapshot` is the singleton website current-state row when Supabase integration is active.
+- Firmware placeholder `target_t: 0.0` means no configured/known setpoint and must become `target_temperature_c: null` in website snapshots.
 
 ## Project Management
 

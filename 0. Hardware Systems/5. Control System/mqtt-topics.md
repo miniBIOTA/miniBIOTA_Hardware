@@ -24,9 +24,10 @@
 
 Missing sensor values must serialize as JSON `null`, never `nan`.
 
+`target_t: 0.0` currently means no configured/known target in firmware telemetry. The Wyse coordinator must publish this as `target_temperature_c: null` in the public website snapshot; only real configured/known setpoints should appear as numeric website targets.
+
 ## Live-Control Boundary
 
 Publishing to `miniBIOTA/biome/<id>/setpoint` changes live control behavior and requires explicit approval.
 
 Direct pump ON/OFF commands are not the normal control model. The ESP32 owns local pump control from setpoints and sensor readings.
-

@@ -140,8 +140,15 @@ Setpoint queue processing is not active in the first read-only coordinator imple
 
 ### Phase 1 - Supabase Schema
 
-- Create `biome_telemetry`, `telemetry_snapshot`, and `setpoint_commands`.
-- Add RLS: public read-only for telemetry tables, service-role only for command queue.
+Current deployed slice:
+
+- `telemetry_snapshot` exists and receives singleton row `id=1` from the Wyse coordinator.
+- Website reads are public-safe and read-only through the Supabase snapshot contract.
+
+Future schema work:
+
+- Create `biome_telemetry` and `setpoint_commands` when history logging or command queues are explicitly scoped.
+- Add or adjust RLS for future telemetry/history/command tables as needed; command queues remain service-role only.
 
 Schema work requires explicit approval.
 
@@ -175,7 +182,7 @@ Current Wyse deployment:
 
 ### Phase 3 - Website Update
 
-Website should replace file-based local telemetry snapshots with Supabase reads from `telemetry_snapshot` id 1, then fall back to placeholder payload if missing or stale.
+Website reads from Supabase `telemetry_snapshot` id 1 for live monitoring, then falls back to a placeholder/degraded payload if the row is missing or stale.
 
 ### Phase 4 - App Monitoring Complete 2026-04-25
 
@@ -209,6 +216,5 @@ Remaining from original Phase 4 spec:
 
 ## Open Items
 
-- Confirm Python/runtime environment on the Wyse for deployment.
 - Decide whether `setpoint_commands` stays temperature-only or accepts future parameters.
 - Decide retention policy for `biome_telemetry`, likely 90-day rolling delete.
