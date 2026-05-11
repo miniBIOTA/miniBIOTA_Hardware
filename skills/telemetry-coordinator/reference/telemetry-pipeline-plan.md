@@ -2,8 +2,8 @@
 id: telemetry_pipeline_plan_reference
 title: Telemetry Pipeline Plan
 domain: engineering_and_hardware
-last_updated: 2026-05-05
-status: phase-4-complete-plus-read-only-coordinator
+last_updated: 2026-05-11
+status: snapshot-producer-deployed
 tags: [telemetry, mqtt, supabase, wyse, app, website, pipeline]
 ---
 # Telemetry Pipeline Plan
@@ -19,6 +19,8 @@ Wire live ESP32 sensor data from the local biome network to three surfaces:
 ## Current Implementation Slice
 
 The first Wyse-side producer implementation is intentionally read-only and limited to the website-compatible `telemetry_snapshot` singleton. It subscribes to local MQTT telemetry/status topics, maintains latest valid state for sensor biomes 2-5, upserts `telemetry_snapshot` row `id=1`, and can optionally write the same snapshot to a local JSON file for development/debug use.
+
+Deployment status as of 2026-05-11: the coordinator is running on the Dell Wyse 3040 as the `minibiota` user service `minibiota-telemetry.service`, with systemd user linger enabled so it can start without an interactive login.
 
 Deferred from this first pass:
 
@@ -99,6 +101,12 @@ Singleton. Wyse upserts one row, `id=1`, every 15 seconds. Website reads it for 
 
 Payload includes schema version, coordinator, upstream, setpoint channel, summary, and nodes.
 
+Target/setpoint semantics:
+
+- Real configured/known setpoint: numeric `target_temperature_c`.
+- No configured/known setpoint: `target_temperature_c: null`.
+- Firmware placeholder `target_t: 0.0` must be normalized by the coordinator to `null` before publishing the website snapshot.
+
 Node entry shape:
 
 ```json
@@ -109,7 +117,7 @@ Node entry shape:
   "state": "healthy",
   "temperature_c": 24.5,
   "humidity_pct": 65.2,
-  "target_temperature_c": 0.0
+  "target_temperature_c": null
 }
 ```
 
@@ -154,6 +162,17 @@ Deployment reference:
 - `deploy/systemd/minibiota-telemetry.service.example`
 - Service should start on boot and restart on crash.
 
+Current Wyse deployment:
+
+- Host/IP: `wyse3040` / `192.168.8.228`.
+- SSH: `minibiota@192.168.8.228` with Josue PC key `C:\Users\gimbo\.ssh\minibiota_wyse_ed25519`.
+- Runtime directory: `/home/minibiota/miniBIOTA_Hardware`.
+- Virtualenv: `/home/minibiota/telemetry-venv`.
+- Env file: `/home/minibiota/telemetry.env`, mode `600`.
+- User service: `/home/minibiota/.config/systemd/user/minibiota-telemetry.service`.
+- Local debug snapshot: `/tmp/minibiota-telemetry-snapshot.json`.
+- Verified writes: Supabase `telemetry_snapshot` row `id=1` received initial `HTTP/2 201 Created` and ongoing `HTTP/2 200 OK` upserts on 2026-05-11.
+
 ### Phase 3 - Website Update
 
 Website should replace file-based local telemetry snapshots with Supabase reads from `telemetry_snapshot` id 1, then fall back to placeholder payload if missing or stale.
@@ -191,6 +210,5 @@ Remaining from original Phase 4 spec:
 ## Open Items
 
 - Confirm Python/runtime environment on the Wyse for deployment.
-- Confirm Supabase credentials and `telemetry_snapshot` table availability.
 - Decide whether `setpoint_commands` stays temperature-only or accepts future parameters.
 - Decide retention policy for `biome_telemetry`, likely 90-day rolling delete.

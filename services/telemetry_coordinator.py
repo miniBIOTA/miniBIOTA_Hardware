@@ -95,6 +95,13 @@ def clean_number(value: Any) -> Optional[float]:
     return candidate
 
 
+def clean_target_temperature(value: Any) -> Optional[float]:
+    target = clean_number(value)
+    if target is None or target == 0.0:
+        return None
+    return target
+
+
 def parse_biome_id(topic: str) -> Optional[int]:
     parts = topic.split("/")
     if len(parts) != 4:
@@ -249,6 +256,7 @@ class TelemetryState:
             return False
 
         values = {field_name: clean_number(raw.get(field_name)) for field_name in EXPECTED_TELEMETRY_FIELDS}
+        values["target_t"] = clean_target_temperature(raw.get("target_t"))
         self.nodes[biome_id] = NodeTelemetry(
             biome_id=biome_id,
             received_at=now or utc_now(),

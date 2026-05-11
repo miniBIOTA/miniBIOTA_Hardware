@@ -125,6 +125,22 @@ class TelemetryCoordinatorTest(unittest.TestCase):
         self.assertIsNone(node["humidity_pct"])
         self.assertEqual(node["target_temperature_c"], 24.5)
 
+    def test_zero_target_temperature_is_treated_as_unknown(self):
+        now = datetime(2026, 5, 2, 12, 0, 0, tzinfo=timezone.utc)
+        state = TelemetryState(upstream_checker=lambda: ("healthy", "ok"))
+        state.record_telemetry(
+            "miniBIOTA/biome/2/telemetry",
+            payload(target_t=0.0),
+            now=now,
+        )
+
+        snapshot = state.build_snapshot(mqtt_connected=True, now=now)
+        node = snapshot["nodes"][0]
+
+        self.assertIsNone(node["target_temperature_c"])
+        self.assertEqual(snapshot["setpoint_channel"]["state"], "standby")
+        self.assertIsNone(snapshot["setpoint_channel"]["target_temperature_c"])
+
     def test_supabase_writer_upserts_singleton_row(self):
         client = FakeSupabaseClient()
         writer = SupabaseSnapshotWriter(client=client, table_name="telemetry_snapshot", row_id=1)
