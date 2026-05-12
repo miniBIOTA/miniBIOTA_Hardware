@@ -1,4 +1,4 @@
----
+﻿---
 name: hardware-session-closeout
 description: Close Hardware sessions with changed files, verification, Company report implications, Brain transition implications, live-system non-change checks, and unresolved questions.
 ---
@@ -33,7 +33,7 @@ Use this playbook when the user says:
 4. Decide whether firmware behavior, telemetry coordinator behavior, MQTT topics, OTA behavior, Supabase telemetry/schema, router/Wyse configuration, or live-control paths changed.
 5. Run the smallest meaningful verification for the touched surface when practical.
 6. Check whether completed work maps to an open App Planner Hardware task.
-7. If a task can be cleared, ask before marking it done unless the user explicitly approved the live Planner update.
+7. If a task can be cleared, ask before marking it done unless the user explicitly approved the live Planner update or standing Hardware project-manager delegation is active.
 8. Run `git diff --name-only`.
 9. Run `git status --short --branch`.
 10. Confirm no firmware upload, MQTT command, live control, schema change, deployment change, router/Wyse change, Planner write, or physical-world action occurred unless explicitly approved.
@@ -60,7 +60,7 @@ Unresolved questions:
 - Do not upload firmware, publish MQTT commands, change router/Wyse configuration, change telemetry schema, or touch live controls from closeout.
 - Do not update Company Hardware reports or the Brain archive lookup unless manager-facing state changed and the user has not deferred it.
 - Do not write Supabase telemetry/control records without explicit approval and readback.
-- Do not create, edit, complete, archive, or delete App Planner project/task records without explicit approval and readback.
+- Do not create, edit, complete, archive, or delete App Planner project/task records without explicit approval or standing Hardware project-manager delegation; always read back changed Planner rows.
 - Do not commit, push, deploy, or restart services unless explicitly scoped.
 
 ## Do Not Do

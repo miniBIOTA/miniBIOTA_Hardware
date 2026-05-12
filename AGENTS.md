@@ -1,4 +1,4 @@
-# miniBIOTA Hardware - Codex Agent Entry Point
+﻿# miniBIOTA Hardware - Codex Agent Entry Point
 
 ## What This Repo Is
 `miniBIOTA_Hardware` is the firmware, control-network, and hardware operations repo for the miniBIOTA closed biosphere. It contains one PlatformIO/Arduino ESP32 project per biome, repo-local durable memory, repo-local task playbooks, exact hardware references, deployment helpers, and telemetry coordinator code.
@@ -101,10 +101,14 @@ Chat history and private model memory are never source of truth. Durable project
 
 ## Planner / Project Management
 - Hardware work is tracked in the App Planner through Supabase `work_projects` and `tasks`.
-- Current Hardware projects live under the Engineering domain with `domain_label = Engineering & Hardware` and `owner_agent = Hardware Agent`.
+- Current Hardware projects should be treated as Hardware-owned Planner records. Any remaining Engineering / `Engineering & Hardware` labels are legacy Planner labels that need approved Planner cleanup rather than active ownership language.
 - At the start of planning-heavy Hardware sessions, read current Planner projects/tasks when choosing next work or checking blockers.
 - At closeout, if completed work maps to a Planner task, ask whether to mark that task done unless the user explicitly asked for that live task update.
 - Creating/editing Planner projects or tasks, changing status, marking done, archiving, or adding subtasks are live Supabase writes and require explicit user approval.
+
+### Hardware Project-Manager Delegation
+Josue may grant the Hardware Agent standing project-manager delegation for ordinary Hardware Planner `work_projects` and `tasks`. Current Hardware Planner work should route to the Hardware domain/owner. Any remaining Engineering / `Engineering & Hardware` labels are legacy Planner labels; verify the live `work_domains` row before bulk changes and clean up legacy labels only through approved Planner writes. When delegation is active, the Hardware Agent may create, edit, schedule, complete, reopen, archive, relink, and reorganize ordinary Hardware Planner records through the approved shared Planner/Supabase write path after stating the intended change and reading back changed rows. The Hardware Agent does not need its own Supabase key; credentials must remain in App-owned tooling, MCP/OAuth, ignored local environment, or scoped helpers that do not commit secrets. This delegation does not authorize firmware uploads, MQTT commands, telemetry/control records, setpoints, Wyse/router/deployment changes, schema/migration/admin actions, app behavior, cross-domain records, Programs/Operations records, or any live-biosphere-affecting action.
+
 
 ## Current Hardware Watchouts
 - All 6 biome nodes have live firmware; biomes 1-5 were USB-flashed on 2026-04-25 and OTA works going forward.

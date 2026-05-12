@@ -1,4 +1,4 @@
----
+﻿---
 id: recurring_hardware_decisions
 title: Recurring Decisions
 domain: engineering_and_hardware
@@ -53,7 +53,7 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 ## Project Management
 
 - App Planner is the live Hardware work queue.
-- Hardware Planner work currently lives under Engineering / `Engineering & Hardware`, not the separate `Hardware` domain.
+- Hardware Planner work should now be treated as Hardware-owned. Engineering / `Engineering & Hardware` is a legacy Planner label that should be cleaned up only through approved Planner writes.
 - Current Hardware projects are: Rain System Manifold Redesign & Replacement; Atmospheric Heat Exchanger & Climate Plumbing; Lighting System Baseline; Control Sensor Reliability Upgrade; Atmosphere/Enclosure Sealing & Insulation Pass; Biome Physical Rebuilds; Telemetry Pipeline & Monitoring Control; Long Horizon Closed-System Milestones.
 - When a session completes work that maps to an open Planner task, ask whether to mark the task done unless the user explicitly requested that update.
 - Do not create, edit, complete, archive, or delete Planner records without explicit approval.

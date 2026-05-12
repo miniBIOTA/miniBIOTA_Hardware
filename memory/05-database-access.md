@@ -1,4 +1,4 @@
-# Hardware Database Access Responsibilities
+﻿# Hardware Database Access Responsibilities
 
 The Hardware Agent treats database access as a live-system boundary. Read telemetry by default. Snapshot writes, control commands, and schema changes require explicit approval and careful verification.
 
@@ -28,9 +28,12 @@ Explicit user approval is required for raw SQL, migrations, destructive writes, 
 Hardware work is managed in the App Planner through Supabase `work_projects` and `tasks`.
 
 - Read Planner projects/tasks when current work priorities, blockers, or completion status matter.
-- Hardware Planner tasks currently use the Engineering domain with `domain_label = Engineering & Hardware`.
+- Hardware Planner tasks should route to Hardware ownership. Any current Engineering / `Engineering & Hardware` labels are legacy Planner labels that need approved cleanup.
 - Creating projects/tasks, linking tasks to projects, adding subtasks, changing status, marking done, or archiving are live operational writes.
 - At closeout, offer to update Planner task status when completed work maps clearly to an open task.
+
+## Project-Manager Delegation
+When Josue grants standing Hardware project-manager delegation, the Hardware Agent may manage ordinary Hardware Planner `work_projects` and `tasks` through the approved shared Planner/Supabase write path. Current Hardware work should route to the Hardware domain/owner. Any current Engineering / `Engineering & Hardware` labels are legacy Planner labels; verify the live `work_domains` row before bulk changes and clean up legacy labels only through approved Planner writes. State intended Planner changes before writing, read changed rows back, and report changed records at closeout. This delegation does not cover telemetry/control records, firmware, MQTT, setpoints, deployment, schema/migrations, service-role/admin actions, app behavior, or live-biosphere actions.
 
 ## Company Reporting
 

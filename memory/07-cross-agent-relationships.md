@@ -1,4 +1,4 @@
----
+﻿---
 id: hardware_cross_agent_relationships
 title: Cross-Agent Relationships
 domain: engineering_and_hardware
@@ -23,7 +23,7 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 - App setpoint control is a live-control surface and must coordinate with Hardware safety rules.
 - App fallback telemetry from Supabase should match the coordinator snapshot contract.
 - App Planner is the live project-management surface for Hardware work.
-- Hardware projects are stored as Supabase `work_projects` under the Engineering domain with `domain_label = Engineering & Hardware` on linked tasks.
+- Hardware projects are Hardware-owned Planner records. If Supabase `work_projects` or linked tasks still show Engineering / `Engineering & Hardware`, treat that as legacy Planner labeling that needs approved cleanup, not active ownership routing.
 - Hardware sessions should read Planner tasks when choosing what to work on and should offer to mark tasks done when completed work clearly maps to an open task.
 - Planner project/task creation, status changes, completion, archive, and subtask writes are live operational records and need explicit approval.
 
