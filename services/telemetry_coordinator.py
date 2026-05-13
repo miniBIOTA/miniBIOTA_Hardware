@@ -40,10 +40,30 @@ EXPECTED_TELEMETRY_FIELDS = (
 )
 
 SENSOR_BIOMES = {
-    2: {"id": "biome-2-lakeshore", "name": "Lakeshore"},
-    3: {"id": "biome-3-lowland-meadow", "name": "Lowland Meadow"},
-    4: {"id": "biome-4-mangrove-forest", "name": "Mangrove Forest"},
-    5: {"id": "biome-5-marine-shore", "name": "Marine Shore"},
+    2: {
+        "id": "biome-2-lakeshore",
+        "name": "Lakeshore",
+        "atmosphere_id": "atmosphere-2-lakeshore",
+        "atmosphere_name": "Lakeshore Atmosphere",
+    },
+    3: {
+        "id": "biome-3-lowland-meadow",
+        "name": "Lowland Meadow",
+        "atmosphere_id": "atmosphere-3-lowland-meadow",
+        "atmosphere_name": "Lowland Meadow Atmosphere",
+    },
+    4: {
+        "id": "biome-4-mangrove-forest",
+        "name": "Mangrove Forest",
+        "atmosphere_id": "atmosphere-4-mangrove-forest",
+        "atmosphere_name": "Mangrove Forest Atmosphere",
+    },
+    5: {
+        "id": "biome-5-marine-shore",
+        "name": "Marine Shore",
+        "atmosphere_id": "atmosphere-5-marine-shore",
+        "atmosphere_name": "Marine Shore Atmosphere",
+    },
 }
 
 
@@ -168,8 +188,10 @@ class CoordinatorConfig:
     supabase_service_role_key: Optional[str] = None
     supabase_table: str = "telemetry_snapshot"
     supabase_row_id: int = 1
+    supabase_history_table: str = "biome_telemetry"
     snapshot_path: Optional[Path] = None
     refresh_seconds: int = 15
+    history_seconds: int = 60
     stale_seconds: int = 20
     offline_seconds: int = 45
     upstream_check_seconds: int = 60
@@ -187,8 +209,10 @@ class CoordinatorConfig:
             supabase_service_role_key=os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or None,
             supabase_table=os.environ.get("MINIBIOTA_TELEMETRY_SUPABASE_TABLE", "telemetry_snapshot"),
             supabase_row_id=env_int("MINIBIOTA_TELEMETRY_SUPABASE_ROW_ID", 1, minimum=1),
+            supabase_history_table=os.environ.get("MINIBIOTA_TELEMETRY_HISTORY_TABLE", "biome_telemetry"),
             snapshot_path=Path(snapshot_path).expanduser() if snapshot_path else None,
             refresh_seconds=env_int("MINIBIOTA_TELEMETRY_REFRESH_SECONDS", 15, minimum=5),
+            history_seconds=env_int("MINIBIOTA_TELEMETRY_HISTORY_SECONDS", 60, minimum=0),
             stale_seconds=env_int("MINIBIOTA_TELEMETRY_NODE_STALE_SECONDS", 20, minimum=1),
             offline_seconds=env_int("MINIBIOTA_TELEMETRY_NODE_OFFLINE_SECONDS", 45, minimum=1),
             upstream_check_seconds=env_int("MINIBIOTA_TELEMETRY_UPSTREAM_CHECK_SECONDS", 60, minimum=1),
@@ -296,6 +320,7 @@ class TelemetryState:
     def build_snapshot(self, mqtt_connected: bool, now: Optional[datetime] = None, refresh_seconds: int = 15) -> Dict[str, Any]:
         generated_at = now or utc_now()
         nodes = [self._build_node(biome_id, generated_at) for biome_id in SENSOR_BIOMES]
+        nodes.extend(self._build_atmosphere_node(biome_id, generated_at) for biome_id in SENSOR_BIOMES)
         coordinator = self._build_coordinator(mqtt_connected=mqtt_connected, nodes=nodes, now=generated_at)
         upstream = self._build_upstream(now=generated_at)
         setpoint_channel = self._build_setpoint_channel(now=generated_at)
@@ -317,6 +342,33 @@ class TelemetryState:
             "nodes": nodes,
         }
 
+    def build_history_rows(self, now: Optional[datetime] = None) -> List[Dict[str, Any]]:
+        generated_at = now or utc_now()
+        rows: List[Dict[str, Any]] = []
+        for biome_id in SENSOR_BIOMES:
+            record = self.nodes.get(biome_id)
+            if not record:
+                continue
+            state, _detail = self._node_state(record, generated_at)
+            if state == "offline":
+                continue
+
+            values = record.values
+            row = {
+                "biome_id": biome_id,
+                "recorded_at": utc_iso(record.received_at),
+                "bio_temp_c": values.get("bio_t"),
+                "bio_humidity_pct": values.get("bio_h"),
+                "atmo_temp_c": values.get("atmo_t"),
+                "atmo_humidity_pct": values.get("atmo_h"),
+                "liquid_temp_c": values.get("liq_t"),
+                "pump_pct": values.get("pump_pct"),
+                "target_temp_c": values.get("target_t"),
+            }
+            if any(value is not None for key, value in row.items() if key not in {"biome_id", "recorded_at"}):
+                rows.append(row)
+        return rows
+
     def _build_node(self, biome_id: int, now: datetime) -> Dict[str, Any]:
         metadata = SENSOR_BIOMES[biome_id]
         record = self.nodes.get(biome_id)
@@ -332,6 +384,24 @@ class TelemetryState:
             role="Biome Node",
             temperature_c=values.get("bio_t"),
             humidity_pct=values.get("bio_h"),
+            target_temperature_c=values.get("target_t"),
+        )
+
+    def _build_atmosphere_node(self, biome_id: int, now: datetime) -> Dict[str, Any]:
+        metadata = SENSOR_BIOMES[biome_id]
+        record = self.nodes.get(biome_id)
+        state, detail = self._node_state(record, now)
+        values = record.values if record else {}
+        return entity(
+            state=state,
+            label=f"{metadata['atmosphere_name']} telemetry",
+            detail=detail,
+            last_seen=record.received_at if record else None,
+            id=metadata["atmosphere_id"],
+            name=metadata["atmosphere_name"],
+            role="Atmosphere Sensor",
+            temperature_c=values.get("atmo_t"),
+            humidity_pct=values.get("atmo_h"),
             target_temperature_c=values.get("target_t"),
         )
 
@@ -506,6 +576,40 @@ class SupabaseSnapshotWriter:
         self.client.table(self.table_name).upsert(row, on_conflict="id").execute()
 
 
+class SupabaseHistoryWriter:
+    def __init__(self, client: Any, table_name: str) -> None:
+        self.client = client
+        self.table_name = table_name
+
+    @classmethod
+    def from_config(cls, config: CoordinatorConfig) -> Optional["SupabaseHistoryWriter"]:
+        if config.history_seconds <= 0:
+            logging.info("Supabase history writer disabled; MINIBIOTA_TELEMETRY_HISTORY_SECONDS=%s", config.history_seconds)
+            return None
+        if not config.supabase_url or not config.supabase_service_role_key:
+            missing = []
+            if not config.supabase_url:
+                missing.append("SUPABASE_URL")
+            if not config.supabase_service_role_key:
+                missing.append("SUPABASE_SERVICE_ROLE_KEY")
+            logging.warning("Supabase history writer disabled; missing %s", ", ".join(missing))
+            return None
+
+        try:
+            from supabase import create_client
+        except ImportError:
+            logging.warning("Supabase history writer disabled; install the supabase package to enable it")
+            return None
+
+        client = create_client(config.supabase_url, config.supabase_service_role_key)
+        return cls(client=client, table_name=config.supabase_history_table)
+
+    def write(self, rows: List[Dict[str, Any]]) -> None:
+        if not rows:
+            return
+        self.client.table(self.table_name).upsert(rows, on_conflict="biome_id,recorded_at").execute()
+
+
 class CoordinatorService:
     def __init__(self, config: CoordinatorConfig) -> None:
         self.config = config
@@ -518,6 +622,8 @@ class CoordinatorService:
         self.stop_event = threading.Event()
         self.mqtt_client: Any = None
         self.writers = self._build_writers(config)
+        self.history_writer = SupabaseHistoryWriter.from_config(config)
+        self.last_history_write_at: Optional[datetime] = None
 
     def _build_writers(self, config: CoordinatorConfig) -> List[Any]:
         writers: List[Any] = []
@@ -555,8 +661,10 @@ class CoordinatorService:
                 logging.debug("MQTT cleanup failed: %s", exc)
 
     def publish_once(self) -> Dict[str, Any]:
+        now = utc_now()
         snapshot = self.state.build_snapshot(
             mqtt_connected=self.mqtt_connected,
+            now=now,
             refresh_seconds=self.config.refresh_seconds,
         )
         for writer in self.writers:
@@ -564,7 +672,24 @@ class CoordinatorService:
                 writer.write(snapshot)
             except Exception as exc:
                 logging.warning("Telemetry snapshot write failed for %s: %s", writer.__class__.__name__, exc)
+        self._write_history_if_due(now)
         return snapshot
+
+    def _write_history_if_due(self, now: datetime) -> None:
+        if not self.history_writer or self.config.history_seconds <= 0:
+            return
+        if self.last_history_write_at and now - self.last_history_write_at < timedelta(seconds=self.config.history_seconds):
+            return
+        rows = self.state.build_history_rows(now=now)
+        if not rows:
+            return
+        try:
+            self.history_writer.write(rows)
+        except Exception as exc:
+            logging.warning("Telemetry history write failed for %s: %s", self.history_writer.__class__.__name__, exc)
+            self.last_history_write_at = now
+            return
+        self.last_history_write_at = now
 
     def _start_mqtt(self) -> None:
         try:

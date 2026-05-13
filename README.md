@@ -83,6 +83,10 @@ Dry-run a sample website-compatible snapshot:
 python services/telemetry_coordinator.py --dry-run
 ```
 
+Internal history schema for climate/control analysis:
+
+`services/schema/biome_telemetry_schema_2026-05-13.sql`
+
 MQTT publishing, Supabase schema changes, Wyse deployment, and command processing remain separate approval-gated actions.
 
 ## Company Link

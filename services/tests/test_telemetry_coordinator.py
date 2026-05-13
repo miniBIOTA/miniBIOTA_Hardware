@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-import shutil
+import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 
 from services.telemetry_coordinator import (  # noqa: E402
     LocalSnapshotWriter,
+    SupabaseHistoryWriter,
     SupabaseSnapshotWriter,
     TelemetryState,
     build_sample_snapshot,
@@ -72,11 +73,38 @@ class TelemetryCoordinatorTest(unittest.TestCase):
             "biome-3-lowland-meadow",
             "biome-4-mangrove-forest",
             "biome-5-marine-shore",
+            "atmosphere-2-lakeshore",
+            "atmosphere-3-lowland-meadow",
+            "atmosphere-4-mangrove-forest",
+            "atmosphere-5-marine-shore",
         ])
         self.assertTrue(all(node["state"] == "healthy" for node in nodes))
         self.assertEqual(nodes[0]["temperature_c"], 24.1)
         self.assertEqual(nodes[0]["humidity_pct"], 72.3)
+        self.assertEqual(nodes[4]["temperature_c"], 23.8)
+        self.assertEqual(nodes[4]["humidity_pct"], 70.2)
         self.assertEqual(snapshot["setpoint_channel"]["state"], "healthy")
+
+    def test_nodes_only_expose_public_website_fields(self):
+        snapshot = build_sample_snapshot()
+        required_fields = {
+            "id",
+            "name",
+            "role",
+            "state",
+            "chip_state",
+            "status_label",
+            "detail",
+            "last_seen",
+            "temperature_c",
+            "humidity_pct",
+            "target_temperature_c",
+        }
+        forbidden_fields = {"liq_t", "liquid_temp_c", "pump_pct", "relay", "command_queue", "actuator"}
+
+        for node in snapshot["nodes"]:
+            self.assertTrue(required_fields.issubset(node.keys()))
+            self.assertTrue(forbidden_fields.isdisjoint(node.keys()))
 
     def test_node_aging_marks_stale_and_offline(self):
         now = datetime(2026, 5, 2, 12, 0, 0, tzinfo=timezone.utc)
@@ -96,6 +124,10 @@ class TelemetryCoordinatorTest(unittest.TestCase):
         self.assertEqual(node_states["biome-3-lowland-meadow"], "stale")
         self.assertEqual(node_states["biome-4-mangrove-forest"], "offline")
         self.assertEqual(node_states["biome-5-marine-shore"], "offline")
+        self.assertEqual(node_states["atmosphere-2-lakeshore"], "healthy")
+        self.assertEqual(node_states["atmosphere-3-lowland-meadow"], "stale")
+        self.assertEqual(node_states["atmosphere-4-mangrove-forest"], "offline")
+        self.assertEqual(node_states["atmosphere-5-marine-shore"], "offline")
 
     def test_malformed_json_is_ignored_and_previous_valid_state_remains(self):
         now = datetime(2026, 5, 2, 12, 0, 0, tzinfo=timezone.utc)
@@ -141,6 +173,45 @@ class TelemetryCoordinatorTest(unittest.TestCase):
         self.assertEqual(snapshot["setpoint_channel"]["state"], "standby")
         self.assertIsNone(snapshot["setpoint_channel"]["target_temperature_c"])
 
+    def test_history_rows_include_internal_climate_analysis_fields(self):
+        now = datetime(2026, 5, 2, 12, 0, 0, tzinfo=timezone.utc)
+        state = TelemetryState(upstream_checker=lambda: ("healthy", "ok"))
+        state.record_telemetry(
+            "miniBIOTA/biome/2/telemetry",
+            payload(
+                atmo_t=23.4,
+                atmo_h=65.5,
+                bio_t=24.6,
+                bio_h=70.5,
+                liq_t=21.2,
+                pump_pct=47,
+                target_t=24.5,
+            ),
+            now=now,
+        )
+
+        rows = state.build_history_rows(now=now)
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0], {
+            "biome_id": 2,
+            "recorded_at": "2026-05-02T12:00:00Z",
+            "bio_temp_c": 24.6,
+            "bio_humidity_pct": 70.5,
+            "atmo_temp_c": 23.4,
+            "atmo_humidity_pct": 65.5,
+            "liquid_temp_c": 21.2,
+            "pump_pct": 47.0,
+            "target_temp_c": 24.5,
+        })
+
+    def test_history_rows_skip_offline_records(self):
+        now = datetime(2026, 5, 2, 12, 0, 0, tzinfo=timezone.utc)
+        state = TelemetryState(offline_seconds=45, upstream_checker=lambda: ("healthy", "ok"))
+        state.record_telemetry("miniBIOTA/biome/2/telemetry", payload(), now=now - timedelta(seconds=45))
+
+        self.assertEqual(state.build_history_rows(now=now), [])
+
     def test_supabase_writer_upserts_singleton_row(self):
         client = FakeSupabaseClient()
         writer = SupabaseSnapshotWriter(client=client, table_name="telemetry_snapshot", row_id=1)
@@ -155,13 +226,31 @@ class TelemetryCoordinatorTest(unittest.TestCase):
         self.assertEqual(client.query.on_conflict, "id")
         self.assertTrue(client.query.executed)
 
+    def test_supabase_history_writer_upserts_rows_by_biome_and_recorded_at(self):
+        client = FakeSupabaseClient()
+        writer = SupabaseHistoryWriter(client=client, table_name="biome_telemetry")
+        rows = [{
+            "biome_id": 2,
+            "recorded_at": "2026-05-02T12:00:00Z",
+            "bio_temp_c": 24.6,
+            "bio_humidity_pct": 70.5,
+            "atmo_temp_c": 23.4,
+            "atmo_humidity_pct": 65.5,
+            "liquid_temp_c": 21.2,
+            "pump_pct": 47.0,
+            "target_temp_c": 24.5,
+        }]
+
+        writer.write(rows)
+
+        self.assertEqual(client.table_name, "biome_telemetry")
+        self.assertEqual(client.query.row, rows)
+        self.assertEqual(client.query.on_conflict, "biome_id,recorded_at")
+        self.assertTrue(client.query.executed)
+
     def test_local_snapshot_writer_writes_atomically_readable_json(self):
-        temp_root = ROOT / ".test-tmp-telemetry"
-        temp_root.mkdir(parents=True, exist_ok=True)
-        temp_dir = temp_root / f"atomic-{os.getpid()}"
-        shutil.rmtree(temp_dir, ignore_errors=True)
-        temp_dir.mkdir(parents=True, exist_ok=True)
-        try:
+        with tempfile.TemporaryDirectory(prefix=f"minibiota-telemetry-{os.getpid()}-") as temp_root:
+            temp_dir = Path(temp_root)
             target = temp_dir / "snapshot.json"
             snapshot = build_sample_snapshot()
 
@@ -174,8 +263,6 @@ class TelemetryCoordinatorTest(unittest.TestCase):
             self.assertEqual(written, snapshot)
             temp_files = [name for name in os.listdir(temp_dir) if name.endswith(".tmp")]
             self.assertEqual(temp_files, [])
-        finally:
-            shutil.rmtree(temp_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":

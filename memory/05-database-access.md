@@ -7,16 +7,16 @@ The Hardware Agent treats database access as a live-system boundary. Read teleme
 - Database access needed: Yes, mostly read-only.
 - Default mode: Read-only telemetry and structured status checks.
 - MCP: Company owns active cross-domain operating interpretation. Brain may still provide broad Supabase MCP read awareness during transition; this domain may use MCP read access for relevant telemetry/hardware records, but should escalate cross-domain interpretation to Company.
-- Preferred path: approved service code such as the telemetry coordinator for Hardware-owned workflows, App Planner for project/task records, and Use approved service code, App Planner, Company/domain-owned helpers, and MCP/read-only awareness for controlled helper paths. Brain tool code is archive/recovery lookup only.
+- Preferred path: approved service code such as the telemetry coordinator for Hardware-owned workflows, App Planner for project/task records, Company/domain-owned helpers, and MCP/read-only awareness for controlled helper paths. Brain tool code is archive/recovery lookup only.
 - Secrets: Local environment variables or ignored local config only.
 
 ## Table Responsibilities
 
 | Category | Tables |
 |---|---|
-| Owned | `telemetry_snapshot`; future `biome_telemetry` and `setpoint_commands` only when approved |
+| Owned | `telemetry_snapshot`; `biome_telemetry`; future `setpoint_commands` only when approved |
 | Read-only | `biomes`, `species`, `biosphere_profile`, App monitoring records, public telemetry endpoints, `work_projects`, and `tasks` |
-| Controlled write | `telemetry_snapshot` through approved service/helper paths; Hardware Planner `work_projects` and `tasks` only after explicit user approval |
+| Controlled write | `telemetry_snapshot` and `biome_telemetry` through approved service/helper paths; Hardware Planner `work_projects` and `tasks` only after explicit user approval |
 | Admin/migration | Telemetry schema, live-control tables, and migrations only with explicit user approval |
 
 ## Approval Boundary

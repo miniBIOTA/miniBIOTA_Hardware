@@ -2,8 +2,8 @@
 id: telemetry_pipeline_plan_reference
 title: Telemetry Pipeline Plan
 domain: engineering_and_hardware
-last_updated: 2026-05-11
-status: snapshot-producer-deployed
+last_updated: 2026-05-13
+status: snapshot-and-history-producer-deployed
 tags: [telemetry, mqtt, supabase, wyse, app, website, pipeline]
 ---
 # Telemetry Pipeline Plan
@@ -18,16 +18,19 @@ Wire live ESP32 sensor data from the local biome network to three surfaces:
 
 ## Current Implementation Slice
 
-The first Wyse-side producer implementation is intentionally read-only and limited to the website-compatible `telemetry_snapshot` singleton. It subscribes to local MQTT telemetry/status topics, maintains latest valid state for sensor biomes 2-5, upserts `telemetry_snapshot` row `id=1`, and can optionally write the same snapshot to a local JSON file for development/debug use.
+The Wyse-side producer implementation is intentionally read-only. It subscribes to local MQTT telemetry/status topics, maintains latest valid state for sensor biomes 2-5, upserts the website-compatible `telemetry_snapshot` row `id=1`, writes internal `biome_telemetry` history rows for analysis, and can optionally write the same snapshot to a local JSON file for development/debug use.
 
-Deployment status as of 2026-05-11: the coordinator is running on the Dell Wyse 3040 as the `minibiota` user service `minibiota-telemetry.service`, with systemd user linger enabled so it can start without an interactive login.
+Deployment status as of 2026-05-13: the coordinator is running on the Dell Wyse 3040 as the `minibiota` user service `minibiota-telemetry.service`, with systemd user linger enabled so it can start without an interactive login. It publishes the public `telemetry_snapshot` and writes internal `biome_telemetry` history.
 
 Deferred from this first pass:
 
-- `biome_telemetry` history inserts.
 - `setpoint_commands` polling.
 - MQTT setpoint publishing.
 - Pump, actuator, lighting, OTA, or other control commands.
+
+Completed 2026-05-13:
+
+- `biome_telemetry` internal history for sensor biomes 2-5, sampled by the Wyse coordinator about once per minute. This stores biome air, atmosphere air, liquid/heat-exchanger temperature, pump percentage, and target temperature for analysis. It is not part of the public website snapshot contract.
 
 ## Architecture Overview
 
@@ -37,7 +40,7 @@ ESP32 nodes
   -> Mosquitto broker on Dell Wyse 3040 at 192.168.8.228:1883
      -> Wyse coordinator service
         -> every 15s upserts telemetry_snapshot for website reads
-        -> future: every 60s inserts biome_telemetry rows
+        -> every 60s inserts biome_telemetry rows for internal analysis
         -> future: polls setpoint_commands and publishes to MQTT
      -> App Monitoring tab
         -> subscribes directly to MQTT for live display
@@ -72,7 +75,7 @@ Each biome publishes or uses:
 
 ### `biome_telemetry`
 
-Future time-series log. Wyse writes one row per active biome per minute.
+Internal time-series log. Wyse writes one row per active sensor biome per minute. Schema packet applied 2026-05-13: `services/schema/biome_telemetry_schema_2026-05-13.sql`.
 
 | Column | Type | Notes |
 |---|---|---|
@@ -84,10 +87,10 @@ Future time-series log. Wyse writes one row per active biome per minute.
 | `atmo_temp_c` | float | Atmosphere air temperature |
 | `atmo_humidity_pct` | float | Atmosphere air humidity |
 | `liquid_temp_c` | float | Coolant/heat exchanger temp, nullable |
-| `pump_pct` | integer | Pump output 0-100%, nullable |
+| `pump_pct` | float | Pump output 0-100%, nullable |
 | `target_temp_c` | float | Active setpoint at time of sample |
 
-Public website reads only `bio_temp_c`, `bio_humidity_pct`, `atmo_temp_c`, and `atmo_humidity_pct`. App/operator surfaces can read liquid temperature and pump percent.
+Public website reads only explicitly approved public-safe fields. App/operator and analysis surfaces can read liquid temperature and pump percent. As of 2026-05-13, liquid/heat-exchanger temperature and pump percent are intended for internal analysis, not public Web display.
 
 ### `telemetry_snapshot`
 
@@ -99,7 +102,7 @@ Singleton. Wyse upserts one row, `id=1`, every 15 seconds. Website reads it for 
 | `updated_at` | timestamptz | Last Wyse write time |
 | `payload` | JSONB | Full website contract shape |
 
-Payload includes schema version, coordinator, upstream, setpoint channel, summary, and nodes.
+Payload includes schema version, coordinator, upstream, setpoint channel, summary, and nodes. `payload.nodes` includes both biome nodes and public atmosphere sensor nodes for sensor biomes 2-5.
 
 Target/setpoint semantics:
 
@@ -107,7 +110,7 @@ Target/setpoint semantics:
 - No configured/known setpoint: `target_temperature_c: null`.
 - Firmware placeholder `target_t: 0.0` must be normalized by the coordinator to `null` before publishing the website snapshot.
 
-Node entry shape:
+Biome node entry shape:
 
 ```json
 {
@@ -120,6 +123,33 @@ Node entry shape:
   "target_temperature_c": null
 }
 ```
+
+Atmosphere sensor node entry shape:
+
+```json
+{
+  "id": "atmosphere-2-lakeshore",
+  "name": "Lakeshore Atmosphere",
+  "role": "Atmosphere Sensor",
+  "state": "healthy",
+  "chip_state": "nominal",
+  "status_label": "Healthy",
+  "detail": "Latest valid telemetry is within the expected publish window.",
+  "last_seen": "2026-05-13T12:00:00Z",
+  "temperature_c": 23.8,
+  "humidity_pct": 70.2,
+  "target_temperature_c": null
+}
+```
+
+Current public atmosphere node IDs:
+
+- `atmosphere-2-lakeshore`
+- `atmosphere-3-lowland-meadow`
+- `atmosphere-4-mangrove-forest`
+- `atmosphere-5-marine-shore`
+
+Public node payloads must not include liquid temperature, pump percentage, relay, command queue, actuator, or other control fields.
 
 ### `setpoint_commands`
 
@@ -144,10 +174,11 @@ Current deployed slice:
 
 - `telemetry_snapshot` exists and receives singleton row `id=1` from the Wyse coordinator.
 - Website reads are public-safe and read-only through the Supabase snapshot contract.
+- `biome_telemetry` exists for internal history and receives Wyse coordinator rows about every minute.
 
 Future schema work:
 
-- Create `biome_telemetry` and `setpoint_commands` when history logging or command queues are explicitly scoped.
+- Create `setpoint_commands` only when command queues are explicitly scoped.
 - Add or adjust RLS for future telemetry/history/command tables as needed; command queues remain service-role only.
 
 Schema work requires explicit approval.
@@ -162,6 +193,7 @@ Logic:
 - Subscribe to `miniBIOTA/biome/+/telemetry` and `miniBIOTA/biome/+/status`.
 - Maintain in-memory latest state by biome ID.
 - Every 15 seconds build snapshot payload and upsert `telemetry_snapshot` id 1 when Supabase is configured.
+- Every 60 seconds build internal history rows and upsert `biome_telemetry` by `(biome_id, recorded_at)` when Supabase and the history table are configured.
 - Optionally write local JSON snapshot.
 
 Deployment reference:
@@ -178,7 +210,7 @@ Current Wyse deployment:
 - Env file: `/home/minibiota/telemetry.env`, mode `600`.
 - User service: `/home/minibiota/.config/systemd/user/minibiota-telemetry.service`.
 - Local debug snapshot: `/tmp/minibiota-telemetry-snapshot.json`.
-- Verified writes: Supabase `telemetry_snapshot` row `id=1` received initial `HTTP/2 201 Created` and ongoing `HTTP/2 200 OK` upserts on 2026-05-11.
+- Verified writes: Supabase `telemetry_snapshot` row `id=1` received ongoing `HTTP/2 200 OK` upserts on 2026-05-13, and `biome_telemetry` received live rows for biomes 2-5 with `liquid_temp_c` and `pump_pct`.
 
 ### Phase 3 - Website Update
 
