@@ -2,7 +2,7 @@
 id: hardware_cross_agent_relationships
 title: Cross-Agent Relationships
 domain: engineering_and_hardware
-last_updated: 2026-05-10
+last_updated: 2026-05-13
 tags: [memory, brain, app, web, content, research, supabase]
 ---
 # Cross-Agent Relationships
@@ -20,6 +20,7 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 ## App Agent
 
 - App Monitoring consumes live MQTT data when on `mB2.4`.
+- App Monitoring consumes `liq_t` and `pump_pct` from the live MQTT payload as internal operator hardware telemetry; the operator app can show these without public Web exposure or a new Hardware data path.
 - App setpoint control is a live-control surface and must coordinate with Hardware safety rules.
 - App fallback telemetry from Supabase should match the coordinator snapshot contract.
 - App Planner is the live project-management surface for Hardware work.
@@ -29,9 +30,10 @@ Hardware owns implementation detail for the physical biosphere, firmware, contro
 
 ## Web Agent
 
-- The website should consume public-safe telemetry from Supabase snapshots/history.
+- The website should consume public-safe current-state telemetry from the Supabase `telemetry_snapshot` contract.
 - Website telemetry contract details should stay aligned with `skills/telemetry-coordinator/reference/telemetry-pipeline-plan.md` and Web's technical architecture.
 - Public website monitoring is read-only unless a separate approved command path exists.
+- Internal `biome_telemetry` history, pump percentage, and liquid/heat-exchanger temperature should not be exposed publicly without a separate Web contract decision.
 
 ## Content Agent
 

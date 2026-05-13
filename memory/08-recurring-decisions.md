@@ -44,6 +44,7 @@ These are durable Hardware decisions that should not be rediscovered every sessi
 ## Telemetry
 
 - App Monitoring is the live operator surface over direct MQTT.
+- App Monitoring already consumes live MQTT `liq_t` and `pump_pct` as internal hardware telemetry; the operator app can show those fields without adding them to public Web payloads.
 - The Wyse telemetry coordinator is deployed as a read-only producer on the Dell Wyse.
 - Coordinator history inserts to `biome_telemetry` are live for internal climate/control analysis at about one-minute cadence for sensor biomes 2-5.
 - Setpoint command polling remains deferred until explicitly scoped.

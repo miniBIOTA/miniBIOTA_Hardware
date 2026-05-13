@@ -26,7 +26,7 @@ ESP32 sensor nodes
   -> internal climate/control analysis
 ```
 
-The App Monitoring tab is live and display-focused. Biomes 2-5 report sensor data; biome 1 has no sensors; biome 6 is wave-motor-only.
+The App Monitoring tab is live and display-focused. Biomes 2-5 report sensor data; biome 1 has no sensors; biome 6 is wave-motor-only. As of 2026-05-13, App Monitoring already consumes live MQTT `liq_t` and `pump_pct` fields and labels them as internal hardware telemetry; no Hardware-side data path change was needed for that App update.
 
 ## Coordinator Flow
 

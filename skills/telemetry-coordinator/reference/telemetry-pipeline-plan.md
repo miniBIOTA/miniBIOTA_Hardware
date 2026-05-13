@@ -13,14 +13,16 @@ tags: [telemetry, mqtt, supabase, wyse, app, website, pipeline]
 Wire live ESP32 sensor data from the local biome network to three surfaces:
 
 - App: full operator view with real-time readings and future setpoint control.
-- Railway website: public read-only monitoring surface with historical charts.
-- Supabase: historical time-series log for biome telemetry.
+- Railway website: public read-only live monitoring surface.
+- Supabase: current-state public snapshot plus internal historical time-series log for biome telemetry.
 
 ## Current Implementation Slice
 
 The Wyse-side producer implementation is intentionally read-only. It subscribes to local MQTT telemetry/status topics, maintains latest valid state for sensor biomes 2-5, upserts the website-compatible `telemetry_snapshot` row `id=1`, writes internal `biome_telemetry` history rows for analysis, and can optionally write the same snapshot to a local JSON file for development/debug use.
 
 Deployment status as of 2026-05-13: the coordinator is running on the Dell Wyse 3040 as the `minibiota` user service `minibiota-telemetry.service`, with systemd user linger enabled so it can start without an interactive login. It publishes the public `telemetry_snapshot` and writes internal `biome_telemetry` history.
+
+App status as of 2026-05-13: App Monitoring already consumes live MQTT `liq_t` and `pump_pct`; the App-side update only changed operator-facing labels to make those cards read as internal hardware telemetry.
 
 Deferred from this first pass:
 
@@ -224,6 +226,7 @@ Implemented in the App:
 - Connection banner.
 - Six biome subtabs.
 - Seven sensor fields where applicable.
+- Internal hardware telemetry labels for live MQTT `liq_t` and `pump_pct`.
 - Healthy/stale/offline chip status.
 - Setpoint controls deferred.
 
